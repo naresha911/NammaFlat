@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "411723479842",
+    "firebase_url": "https://namma-flat.firebaseio.com",
+    "project_id": "namma-flat",
+    "storage_bucket": "namma-flat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:411723479842:android:42109f36e43946d3",
+        "android_client_info": {
+          "package_name": "com.savera.nammaflat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "411723479842-pdb6vgpu7ft6d2ubae2tmq0o59gr9jfe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFzO40QzX5fUoYKhfZR_KnmsPBe4Vk5rI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
