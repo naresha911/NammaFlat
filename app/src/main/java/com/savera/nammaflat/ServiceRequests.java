@@ -124,11 +124,11 @@ public class ServiceRequests extends AppCompatActivity {
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_service_requests, container, false);
             serviceRequestList = new ArrayList<>();
-            serviceRequestList.add(new ServiceRequestModal("Ticket title", "","Pending", 1));
-            serviceRequestList.add(new ServiceRequestModal("Ticket title", "","Pending", 1));
-            serviceRequestList.add(new ServiceRequestModal("Ticket title", "","Pending", 1));
-            serviceRequestList.add(new ServiceRequestModal("Ticket title", "","Pending", 1));
-            serviceRequestList.add(new ServiceRequestModal("Ticket title", "","Pending", 1));
+            //serviceRequestList.add(new ServiceRequestModal("Ticket title", "","Pending", 1));
+          //  serviceRequestList.add(new ServiceRequestModal("Ticket title", "","Pending", 1));
+        //    serviceRequestList.add(new ServiceRequestModal("Ticket title", "","Pending", 1));
+          //  serviceRequestList.add(new ServiceRequestModal("Ticket title", "","Pending", 1));
+            //serviceRequestList.add(new ServiceRequestModal("Ticket title", "","Pending", 1));
 
             recyclerView = rootView.findViewById(R.id.recyclerViewServiceRequests);
             recyclerView.setHasFixedSize(TRUE);

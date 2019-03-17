@@ -38,8 +38,8 @@ public class ServiceReqAdapter extends RecyclerView.Adapter<ServiceReqViewHolder
     public void onBindViewHolder(@NonNull ServiceReqViewHolder serviceReqViewHolder, int i) {
         ServiceRequestModal serviceReq = mListServiceReqs.get(i);
 
-        serviceReqViewHolder.textViewReqTitle.setText(serviceReq.getSzReqTitle());
-        serviceReqViewHolder.textViewReqStatus.setText(serviceReq.getSzReqStatus());
+        serviceReqViewHolder.textViewReqTitle.setText(serviceReq.getReqTitle());
+        serviceReqViewHolder.textViewReqStatus.setText("Temp Text");
         serviceReqViewHolder.textViewReqCategory.setText("1");
         //serviceReqViewHolder.textViewReqCategory.setText(serviceReq.getReqCategory());
     }
