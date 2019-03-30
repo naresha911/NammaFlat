@@ -6,4 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".AuthActivity">
 
+    <ProgressBar
+        android:id="@+id/title_refresh_progress"
+        style="@style/TitleBarProgressIndicator"
+        android:visibility="gone" />
+
 </android.support.constraint.ConstraintLayout>

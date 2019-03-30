@@ -1,12 +1,16 @@
 package com.savera.nammaflat.Requests;
 
 import android.os.AsyncTask;
+
+import com.google.android.gms.auth.api.Auth;
 import com.google.api.client.extensions.android.http.AndroidHttp;
+import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.model.ValueRange;
+import com.savera.nammaflat.AuthActivity;
 import com.savera.nammaflat.MyApplication;
 import com.savera.nammaflat.modal.ServiceRequestModal;
 
@@ -17,10 +21,15 @@ import java.util.List;
 import static com.savera.nammaflat.MyApplication.mCredential;
 
 public class SheetsBaseRequest{
+    private AuthActivity mAuthActivity;
+
+    public SheetsBaseRequest(AuthActivity authActivity) {
+        mAuthActivity = authActivity;
+    }
 
     public int getAllFlatRequests()
     {
-        SheetsBaseRequest.MakeRequestTask makeRequestTask = new SheetsBaseRequest.MakeRequestTask(MyApplication.FLAT_REQUEST_SHEET, "Sheet1");
+        SheetsBaseRequest.MakeRequestTask makeRequestTask = new SheetsBaseRequest.MakeRequestTask(MyApplication.FLAT_REQUEST_SHEET, "Sheet1!A1:B4");
         if(makeRequestTask != null)
         {
             if(makeRequestTask.execute() == null)
@@ -64,8 +73,11 @@ public class SheetsBaseRequest{
             } catch (Exception e) {
                 mLastError = e;
                 cancel(true);
-                //mCredential.setSelectedAccount(null);
-                //getResultsFromApi();
+                MyApplication.mCredential.setSelectedAccount(null);
+                mAuthActivity.startActivityForResult(
+                        ((UserRecoverableAuthIOException) mLastError).getIntent(),
+                        AuthActivity.REQUEST_AUTHORIZATION);
+               // mAuthActivity.startActivityForResult();
                 return null;
             }
         }

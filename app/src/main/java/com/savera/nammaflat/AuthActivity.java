@@ -18,6 +18,7 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.client.util.ExponentialBackOff;
 import com.google.api.services.sheets.v4.SheetsScopes;
+import com.savera.nammaflat.Requests.AsyncLoadSheets;
 import com.savera.nammaflat.Requests.SheetsBaseRequest;
 
 import java.util.Arrays;
@@ -29,7 +30,7 @@ import pub.devrel.easypermissions.EasyPermissions;
 public class AuthActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks{
 
     static final int REQUEST_ACCOUNT_PICKER = 1000;
-    static final int REQUEST_AUTHORIZATION = 1001;
+    public static final int REQUEST_AUTHORIZATION = 1001;
     static final int REQUEST_GOOGLE_PLAY_SERVICES = 1002;
     static final int REQUEST_PERMISSION_GET_ACCOUNTS = 1003;
     private static final String[] SCOPES = { SheetsScopes.SPREADSHEETS };
@@ -51,16 +52,17 @@ public class AuthActivity extends AppCompatActivity implements EasyPermissions.P
                 getApplicationContext(), Arrays.asList(SCOPES))
                 .setBackOff(new ExponentialBackOff());
 
-   //     MyApplication.mCredential.setSelectedAccountName("dsmax.savera911@gmail.com");
+        MyApplication.mCredential.setSelectedAccountName("dsmax.savera911@gmail.com");
 
         AuthGoogleCredentials();
 
-        SheetsBaseRequest req = new SheetsBaseRequest();
+        /*SheetsBaseRequest req = new SheetsBaseRequest(this);
         if(req.getAllFlatRequests() == 1) {
             AuthGoogleCredentials();
             MyApplication.mCredential.setSelectedAccount(null);
             req.getAllFlatRequests();
-        }
+        }*/
+        new AsyncLoadSheets(this, MyApplication.FLAT_REQUEST_SHEET, "Sheet1!A1:B4").execute();
     }
 
     /**
@@ -245,7 +247,7 @@ public class AuthActivity extends AppCompatActivity implements EasyPermissions.P
      * @param connectionStatusCode code describing the presence (or lack of)
      *     Google Play Services on this device.
      */
-    void showGooglePlayServicesAvailabilityErrorDialog(
+    public void showGooglePlayServicesAvailabilityErrorDialog(
             final int connectionStatusCode) {
         GoogleApiAvailability apiAvailability = GoogleApiAvailability.getInstance();
         Dialog dialog = apiAvailability.getErrorDialog(
