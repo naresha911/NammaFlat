@@ -1,12 +1,8 @@
 package com.savera.nammaflat.Requests;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.view.View;
-import android.widget.ProgressBar;
 
-import com.google.android.gms.auth.api.Auth;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GooglePlayServicesAvailabilityIOException;
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
@@ -14,8 +10,7 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.savera.nammaflat.AuthActivity;
-import com.savera.nammaflat.MyApplication;
-import com.savera.nammaflat.R;
+import com.savera.nammaflat.modal.ServiceRequestEntries;
 
 import java.io.IOException;
 
@@ -27,6 +22,8 @@ abstract class SheetsAsyncTask extends AsyncTask<Void, Void, Boolean> {
     protected Exception mLastError = null;
     protected String mSpreadSheetId;
     protected String mRange;
+    protected ServiceRequestEntries mServiceRequests;
+
 
     public SheetsAsyncTask(AuthActivity authActivity, String spreadSheetId, String range) {
         mAuthActivity = authActivity;
@@ -39,7 +36,7 @@ abstract class SheetsAsyncTask extends AsyncTask<Void, Void, Boolean> {
         HttpTransport transport = AndroidHttp.newCompatibleTransport();
         JsonFactory jsonFactory = JacksonFactory.getDefaultInstance();
         mService = new com.google.api.services.sheets.v4.Sheets.Builder(
-                transport, jsonFactory, MyApplication.mCredential)
+                transport, jsonFactory, mAuthActivity.mCredential)
                 .setApplicationName("Google Sheets API")
                 .build();
     }
@@ -91,6 +88,13 @@ abstract class SheetsAsyncTask extends AsyncTask<Void, Void, Boolean> {
     @Override
     protected void onCancelled() {
         super.onCancelled();
+    }
+
+    public ServiceRequestEntries GetRequests() {
+        if(mServiceRequests.IsEmpty())
+            return null;
+
+        return mServiceRequests;
     }
 
     abstract protected void Run() throws IOException;

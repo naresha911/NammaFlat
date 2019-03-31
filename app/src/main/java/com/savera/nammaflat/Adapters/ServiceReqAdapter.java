@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.savera.nammaflat.R;
+import com.savera.nammaflat.modal.ServiceRequestEntries;
 import com.savera.nammaflat.modal.ServiceRequestModal;
 import com.savera.nammaflat.viewholders.ServiceReqViewHolder;
 
@@ -20,8 +21,8 @@ import java.util.List;
 public class ServiceReqAdapter extends RecyclerView.Adapter<ServiceReqViewHolder>{
 
     Context mtx;
-    List<ServiceRequestModal> mListServiceReqs;
-    public ServiceReqAdapter(Context ctx, List<ServiceRequestModal> listReqs) {
+    ServiceRequestEntries mListServiceReqs;
+    public ServiceReqAdapter(Context ctx, ServiceRequestEntries listReqs) {
         mtx = ctx;
         mListServiceReqs = listReqs;
     }
@@ -36,7 +37,7 @@ public class ServiceReqAdapter extends RecyclerView.Adapter<ServiceReqViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ServiceReqViewHolder serviceReqViewHolder, int i) {
-        ServiceRequestModal serviceReq = mListServiceReqs.get(i);
+        ServiceRequestModal serviceReq = mListServiceReqs.GetAt(i);
 
         serviceReqViewHolder.textViewReqTitle.setText(serviceReq.getReqTitle());
         serviceReqViewHolder.textViewReqStatus.setText("Temp Text");
@@ -46,6 +47,6 @@ public class ServiceReqAdapter extends RecyclerView.Adapter<ServiceReqViewHolder
 
     @Override
     public int getItemCount() {
-        return mListServiceReqs.size();
+        return mListServiceReqs.GetCount();
     }
 }

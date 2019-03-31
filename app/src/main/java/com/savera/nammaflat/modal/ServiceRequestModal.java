@@ -1,6 +1,9 @@
 package com.savera.nammaflat.modal;
 
+import java.util.List;
+
 public class ServiceRequestModal {
+    private int id;
     private String ReqTitle;
     private String ReqDescription;
     private String ReqImage;
@@ -8,14 +11,18 @@ public class ServiceRequestModal {
     private int UserId;
     private int ReqCategory;
 
+    public void FillData(List<String> dataStrings)
+    {
+        if(dataStrings.size() != 7)
+            return;
 
-    public ServiceRequestModal(String reqTitle, String reqDescription, String reqImage, int statusID, int userId, int reqCategory) {
-        ReqTitle = reqTitle;
-        ReqDescription = reqDescription;
-        ReqImage = reqImage;
-        StatusID = statusID;
-        UserId = userId;
-        ReqCategory = reqCategory;
+        this.id = Integer.parseInt(dataStrings.get(0));
+        ReqTitle = dataStrings.get(1);
+        ReqDescription = dataStrings.get(2);
+        ReqImage = dataStrings.get(3);
+        StatusID = Integer.parseInt(dataStrings.get(4));
+        UserId = Integer.parseInt(dataStrings.get(5));
+        ReqCategory = Integer.parseInt(dataStrings.get(6));
     }
 
     public String getReqTitle() {

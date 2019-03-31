@@ -8,13 +8,15 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 
     <application
-        android:name="com.savera.nammaflat.MyApplication"
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="namma_flat"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ServiceRequestForm"></activity>
+        <activity android:name=".ShowServiceRequests" />
         <activity android:name=".AuthActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,15 +24,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ServiceRequests"
-            android:label="@string/title_activity_service_requests"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".Login_Activity" />
         <activity android:name=".SignupActivity" />
-        <activity android:name=".MainActivity">
-
-        </activity>
+        <activity android:name=".MainActivity" />
     </application>
 
 </manifest>

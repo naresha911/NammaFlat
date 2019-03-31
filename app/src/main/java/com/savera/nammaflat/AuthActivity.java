@@ -19,7 +19,7 @@ import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccoun
 import com.google.api.client.util.ExponentialBackOff;
 import com.google.api.services.sheets.v4.SheetsScopes;
 import com.savera.nammaflat.Requests.AsyncLoadSheets;
-import com.savera.nammaflat.Requests.SheetsBaseRequest;
+import com.savera.nammaflat.modal.SheetsConstants;
 
 import java.util.Arrays;
 import java.util.List;
@@ -34,8 +34,10 @@ public class AuthActivity extends AppCompatActivity implements EasyPermissions.P
     static final int REQUEST_GOOGLE_PLAY_SERVICES = 1002;
     static final int REQUEST_PERMISSION_GET_ACCOUNTS = 1003;
     private static final String[] SCOPES = { SheetsScopes.SPREADSHEETS };
-
     private static final String PREF_ACCOUNT_NAME = "accountName";
+
+    public GoogleAccountCredential mCredential;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,11 +50,11 @@ public class AuthActivity extends AppCompatActivity implements EasyPermissions.P
         super.onStart();
 
         // Initialize credentials and service object.
-        MyApplication.mCredential = GoogleAccountCredential.usingOAuth2(
+        mCredential = GoogleAccountCredential.usingOAuth2(
                 getApplicationContext(), Arrays.asList(SCOPES))
                 .setBackOff(new ExponentialBackOff());
 
-        MyApplication.mCredential.setSelectedAccountName("dsmax.savera911@gmail.com");
+        mCredential.setSelectedAccountName("dsmax.savera911@gmail.com");
 
         AuthGoogleCredentials();
 
@@ -62,7 +64,6 @@ public class AuthActivity extends AppCompatActivity implements EasyPermissions.P
             MyApplication.mCredential.setSelectedAccount(null);
             req.getAllFlatRequests();
         }*/
-        new AsyncLoadSheets(this, MyApplication.FLAT_REQUEST_SHEET, "Sheet1!A1:B4").execute();
     }
 
     /**
@@ -75,7 +76,7 @@ public class AuthActivity extends AppCompatActivity implements EasyPermissions.P
     private void AuthGoogleCredentials() {
         if (! isGooglePlayServicesAvailable()) {
             acquireGooglePlayServices();
-        } else if (MyApplication.mCredential.getSelectedAccountName() == null) {
+        } else if (mCredential.getSelectedAccountName() == null) {
             chooseAccount();
         } else if (! isDeviceOnline()) {
             Toast.makeText(this, "No network connection available.", Toast.LENGTH_LONG);
@@ -99,12 +100,12 @@ public class AuthActivity extends AppCompatActivity implements EasyPermissions.P
             String accountName = getPreferences(Context.MODE_PRIVATE)
                     .getString(PREF_ACCOUNT_NAME, null);
             if (accountName != null) {
-                MyApplication.mCredential.setSelectedAccountName(accountName);
+                mCredential.setSelectedAccountName(accountName);
                 AuthGoogleCredentials();
             } else {
                 // Start a dialog from which the user can choose an account
                 startActivityForResult(
-                        MyApplication.mCredential.newChooseAccountIntent(),
+                        mCredential.newChooseAccountIntent(),
                         REQUEST_ACCOUNT_PICKER);
             }
         } else {
@@ -149,7 +150,7 @@ public class AuthActivity extends AppCompatActivity implements EasyPermissions.P
                         SharedPreferences.Editor editor = settings.edit();
                         editor.putString(PREF_ACCOUNT_NAME, accountName);
                         editor.apply();
-                        MyApplication.mCredential.setSelectedAccountName(accountName);
+                        mCredential.setSelectedAccountName(accountName);
                     }
                 }
                 break;
@@ -255,5 +256,23 @@ public class AuthActivity extends AppCompatActivity implements EasyPermissions.P
                 connectionStatusCode,
                 REQUEST_GOOGLE_PLAY_SERVICES);
         dialog.show();
+    }
+
+    public boolean IsDataConnected() {
+        ConnectivityManager connectMngr = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = null;
+        if(connectMngr != null) {
+            activeNetworkInfo = connectMngr.getActiveNetworkInfo();
+        }
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+    }
+
+    public boolean IsWIFIConnected() {
+        ConnectivityManager connectMngr = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetWorkInfo = null;
+        if(connectMngr != null) {
+            activeNetWorkInfo = connectMngr.getActiveNetworkInfo();
+        }
+        return activeNetWorkInfo !=null && activeNetWorkInfo.isConnected();
     }
 }
