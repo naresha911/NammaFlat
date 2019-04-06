@@ -17,11 +17,12 @@ import com.savera.nammaflat.viewholders.ServiceReqViewHolder;
 
 import java.util.List;
 
-
 public class ServiceReqAdapter extends RecyclerView.Adapter<ServiceReqViewHolder>{
 
     Context mtx;
     ServiceRequestEntries mListServiceReqs;
+    public ServiceRequestItemClickListener mServiceRequestItemClickListener;
+
     public ServiceReqAdapter(Context ctx, ServiceRequestEntries listReqs) {
         mtx = ctx;
         mListServiceReqs = listReqs;
@@ -32,7 +33,7 @@ public class ServiceReqAdapter extends RecyclerView.Adapter<ServiceReqViewHolder
     public ServiceReqViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater inflater = LayoutInflater.from(mtx);
         View view = inflater.inflate(R.layout.service_request_single_card, viewGroup, false);
-        return new ServiceReqViewHolder(view);
+        return new ServiceReqViewHolder(this, view);
     }
 
     @Override
@@ -42,11 +43,16 @@ public class ServiceReqAdapter extends RecyclerView.Adapter<ServiceReqViewHolder
         serviceReqViewHolder.textViewReqTitle.setText(serviceReq.getReqTitle());
         serviceReqViewHolder.textViewReqStatus.setText("Temp Text");
         serviceReqViewHolder.textViewReqCategory.setText("1");
+
         //serviceReqViewHolder.textViewReqCategory.setText(serviceReq.getReqCategory());
     }
 
     @Override
     public int getItemCount() {
         return mListServiceReqs.GetCount();
+    }
+
+    public void RegisterItemClickListner(ServiceRequestItemClickListener srItemclickListener) {
+        mServiceRequestItemClickListener = srItemclickListener;
     }
 }

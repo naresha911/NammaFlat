@@ -2,14 +2,17 @@ package com.savera.nammaflat;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.Toast;
 
+import com.savera.nammaflat.modal.ServiceRequestModal;
+
 //https://www.youtube.com/watch?v=uJDLT8nh2ps
 //https://www.youtube.com/watch?v=VUPM387qyrw
 
-public class MainActivity extends AuthActivity
+public class MainActivity extends AppCompatActivity
 {
     CardView mRequestsCardView;
     CardView mPropertyCardView;
@@ -31,7 +34,9 @@ public class MainActivity extends AuthActivity
             @Override
             public void onClick(View v) {
                 Toast.makeText(MainActivity.this,"Display Requests", Toast.LENGTH_LONG).show();
-                startActivity(new Intent(MainActivity.this, ShowServiceRequests.class));
+                //startActivity(new Intent(MainActivity.this, ServiceRequestForm.class));
+                ServiceRequestForm servicesForm = new ServiceRequestForm();
+                servicesForm.show(getSupportFragmentManager(), "example dialog");
             }
         });
 

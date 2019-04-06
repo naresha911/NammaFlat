@@ -1,8 +1,9 @@
 package com.savera.nammaflat.modal;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class ServiceRequestModal {
+public class ServiceRequestModal implements Serializable {
     private int id;
     private String ReqTitle;
     private String ReqDescription;
