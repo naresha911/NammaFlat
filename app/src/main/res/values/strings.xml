@@ -36,4 +36,11 @@
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="form_title">Enter Title</string>
     <string name="form_description">Description</string>
+    <string-array name="block_spinner_items">
+        <item>A</item>
+        <item>B</item>
+        <item>C</item>
+        <item>D</item>
+        <item>E</item>
+    </string-array>
 </resources>
