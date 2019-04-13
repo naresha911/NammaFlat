@@ -25,7 +25,7 @@
         tools:layout_editor_absoluteX="411dp" />
 
     <Spinner
-        android:id="@+id/block_"
+        android:id="@+id/block"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"

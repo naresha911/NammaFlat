@@ -1,39 +1,37 @@
 {
   "project_info": {
-    "project_number": "411723479842",
-    "firebase_url": "https://namma-flat.firebaseio.com",
-    "project_id": "namma-flat",
-    "storage_bucket": "namma-flat.appspot.com"
+    "project_number": "255720913047",
+    "firebase_url": "https://nammaflat.firebaseio.com",
+    "project_id": "nammaflat",
+    "storage_bucket": "nammaflat.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:411723479842:android:42109f36e43946d3",
+        "mobilesdk_app_id": "1:255720913047:android:42109f36e43946d3",
         "android_client_info": {
           "package_name": "com.savera.nammaflat"
         }
       },
       "oauth_client": [
         {
-          "client_id": "411723479842-pdb6vgpu7ft6d2ubae2tmq0o59gr9jfe.apps.googleusercontent.com",
+          "client_id": "255720913047-qpc4k66grnvtph5bjnmhhua42utbkqf4.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCFzO40QzX5fUoYKhfZR_KnmsPBe4Vk5rI"
+          "current_key": "AIzaSyALNibTmpmIKivm-2ByB-AwTM2LuJJ-suw"
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
+          "other_platform_oauth_client": [
+            {
+              "client_id": "255720913047-qpc4k66grnvtph5bjnmhhua42utbkqf4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
