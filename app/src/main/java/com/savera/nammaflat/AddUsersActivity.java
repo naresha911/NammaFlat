@@ -16,12 +16,13 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.savera.nammaflat.Requests.FirebaseAddData;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
 
-public class Register extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
+public class AddUsersActivity extends GoogleAuthActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     Spinner mBlock;
     Spinner mFlatNumber;
@@ -30,14 +31,11 @@ public class Register extends AppCompatActivity implements AdapterView.OnItemSel
     EditText mPhone;
     Button mRegister;
 
-    public static final String TAG = "REGISTER_ACTIVITY";
-
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        TAG = "REGISTER_ACTIVITY";
 
         mBlock = findViewById(R.id.block);
         mFlatNumber = findViewById(R.id.flat_number);
@@ -50,6 +48,31 @@ public class Register extends AppCompatActivity implements AdapterView.OnItemSel
         mRegister.setOnClickListener(this);
 
         InitializeFlatsSpinner(0);
+    }
+
+    @Override
+    protected RETURN_CODES ExecuteQuery() {
+        int pos = mBlock.getSelectedItemPosition();
+        String sBlockNumber = mBlock.getItemAtPosition(pos).toString();
+
+        pos = mFlatNumber.getSelectedItemPosition();
+        String sFlatNumber = mFlatNumber.getItemAtPosition(pos).toString();
+
+        String sName = mName.getText().toString();
+        String sEmail = mEmail.getText().toString();
+        String sPhone = mPhone.getText().toString();
+
+        Map<String, String> request = new HashMap<>();
+        request.put("name", sName);
+        request.put("email", sEmail);
+        request.put("phone", sPhone);
+
+        String sDocName = Constants.PROJECT_NAME + sBlockNumber + sFlatNumber;
+
+        FirebaseAddData addDataQuery = new FirebaseAddData(this);
+        addDataQuery.SetQueryInfo("users", sDocName, request);
+        addDataQuery.execute();
+        return null;
     }
 
     private void InitializeFlatsSpinner(int pos)
@@ -85,38 +108,7 @@ public class Register extends AppCompatActivity implements AdapterView.OnItemSel
         if(!ValidateFields())
             return;
 
-        int pos = mBlock.getSelectedItemPosition();
-        String sBlockNumber = mBlock.getItemAtPosition(pos).toString();
-
-        pos = mFlatNumber.getSelectedItemPosition();
-        String sFlatNumber = mFlatNumber.getItemAtPosition(pos).toString();
-
-        String sName = mName.getText().toString();
-        String sEmail = mEmail.getText().toString();
-        String sPhone = mPhone.getText().toString();
-
-        Map<String, String> request = new HashMap<>();
-        request.put("name", sName);
-        request.put("email", sEmail);
-        request.put("phone", sPhone);
-
-        String documentName = Constants.PROJECT_NAME + Constants.SEPERATOR +sBlockNumber + sFlatNumber;
-
-        db.collection("users").document(documentName).set(request)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "Successfully Registered");
-                        Toast.makeText(getApplicationContext(), "Successfully Registered", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Registration Failed", e);
-                        Toast.makeText(getApplicationContext(), "Registration Failed", Toast.LENGTH_SHORT).show();
-                    }
-                });
+        TriggerDatabaseQuery();
     }
 
     private boolean ValidateFields() {
