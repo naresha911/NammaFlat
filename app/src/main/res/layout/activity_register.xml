@@ -113,14 +113,14 @@
         android:ems="10"
         android:hint="Phone no"
         android:inputType="phone"
-        app:layout_constraintBottom_toTopOf="@+id/register_button"
+        app:layout_constraintBottom_toTopOf="@+id/register_owner"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
         app:layout_constraintHorizontal_bias="0.466"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/owner_email" />
 
     <Button
-        android:id="@+id/register_button"
+        android:id="@+id/register_owner"
         android:layout_width="353dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"

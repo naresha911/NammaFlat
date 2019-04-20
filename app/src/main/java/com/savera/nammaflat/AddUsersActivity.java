@@ -1,9 +1,6 @@
 package com.savera.nammaflat;
 
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,14 +10,13 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.savera.nammaflat.Requests.FirebaseAddData;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
+
+import static com.savera.nammaflat.GoogleAuthActivity.RETURN_CODES.RETURN_Sucess;
 
 public class AddUsersActivity extends GoogleAuthActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
@@ -35,14 +31,14 @@ public class AddUsersActivity extends GoogleAuthActivity implements AdapterView.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        TAG = "REGISTER_ACTIVITY";
+        TAG = "ADDUSER_ACTIVITY";
 
         mBlock = findViewById(R.id.block);
         mFlatNumber = findViewById(R.id.flat_number);
         mName = findViewById(R.id.owner_name);
         mEmail = findViewById(R.id.owner_email);
         mPhone = findViewById(R.id.owner_phone);
-        mRegister = findViewById(R.id.register_button);
+        mRegister = findViewById(R.id.register_owner);
 
         mBlock.setOnItemSelectedListener(this);
         mRegister.setOnClickListener(this);
@@ -72,7 +68,7 @@ public class AddUsersActivity extends GoogleAuthActivity implements AdapterView.
         FirebaseAddData addDataQuery = new FirebaseAddData(this);
         addDataQuery.SetQueryInfo("users", sDocName, request);
         addDataQuery.execute();
-        return null;
+        return RETURN_Sucess;
     }
 
     private void InitializeFlatsSpinner(int pos)
