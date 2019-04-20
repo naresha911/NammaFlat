@@ -16,4 +16,7 @@ public class Constants {
     /** 'Scopes' required to request Google permissions for our specific case */
     public final static String GPHOTOS_SCOPE
             = "oauth2:profile email https://www.googleapis.com/auth/drive.photos.readonly";
+
+    /** Firebase collections and documents */
+    public static final String COL_SAVERA_FLATS = "savera_flats";
 }

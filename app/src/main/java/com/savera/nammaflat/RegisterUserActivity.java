@@ -11,6 +11,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.savera.nammaflat.Requests.FirebaseReadData;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Vector;
 
 import static com.savera.nammaflat.GoogleAuthActivity.RETURN_CODES.RETURN_Sucess;
@@ -59,8 +63,7 @@ public class RegisterUserActivity extends GoogleAuthActivity implements AdapterV
             mEmailTextView.setText(googleAccountName);
             mEmailTextView.setVisibility(View.VISIBLE);
         } else if(mQueryStage == QUERY_STAGE.QUERY_REGISTER) {
-
-
+            IsUserRegistered();
         }
         return RETURN_Sucess;
     }
@@ -133,7 +136,7 @@ public class RegisterUserActivity extends GoogleAuthActivity implements AdapterV
     }
 
     private boolean ValidateEmailField() {
-        String sEmail = mEmail.getText().toString();
+        String sEmail = mEmailTextView.getText().toString();
         if(sEmail.isEmpty()) {
             Toast.makeText(this, "Email field is empty!", Toast.LENGTH_SHORT).show();
             return false;
@@ -163,6 +166,26 @@ public class RegisterUserActivity extends GoogleAuthActivity implements AdapterV
     }
 
     private boolean IsUserRegistered() {
-        return false;
+        int pos = mBlock.getSelectedItemPosition();
+        String sBlockNumber = mBlock.getItemAtPosition(pos).toString();
+
+        pos = mFlatNumber.getSelectedItemPosition();
+        String sFlatNumber = mFlatNumber.getItemAtPosition(pos).toString();
+
+        String sName = mName.getText().toString();
+        String sEmail = mEmail.getText().toString();
+        String sPhone = mPhone.getText().toString();
+
+        Map<String, String> request = new HashMap<>();
+        request.put("name", sName);
+        request.put("email", sEmail);
+        request.put("phone", sPhone);
+
+        String sDocName = Constants.PROJECT_NAME + sBlockNumber + sFlatNumber;
+
+        FirebaseReadData addDataQuery = new FirebaseReadData(this);
+        addDataQuery.SetQueryInfo(Constants.COL_SAVERA_FLATS, sDocName);
+        addDataQuery.execute();
+        return true;
     }
 }
