@@ -22,8 +22,6 @@ public class ShowServiceRequests extends AuthActivity implements ServiceRequestI
     private RecyclerView mRecyclerView;
     private ServiceRequestEntries mServiceRequestsEntries;
 
-    FirebaseFirestore fireStoreDB = FirebaseFirestore.getInstance();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -1,6 +1,9 @@
 package com.savera.nammaflat;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.AdapterView;
@@ -11,8 +14,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.savera.nammaflat.Requests.FirebaseReadData;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.savera.nammaflat.Requests.GoogleAsyncTask;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
@@ -181,11 +191,52 @@ public class RegisterUserActivity extends GoogleAuthActivity implements AdapterV
         request.put("email", sEmail);
         request.put("phone", sPhone);
 
-        String sDocName = Constants.PROJECT_NAME + sBlockNumber + sFlatNumber;
-
-        FirebaseReadData addDataQuery = new FirebaseReadData(this);
-        addDataQuery.SetQueryInfo(Constants.COL_SAVERA_FLATS, sDocName);
-        addDataQuery.execute();
+        FirebaseReadData readDataQuery = new FirebaseReadData(this);
+        readDataQuery.SetQueryInfo(Constants.COLLECTION_SAVERA_USERS, "");
+        readDataQuery.execute();
         return true;
+    }
+
+    private class FirebaseReadData extends GoogleAsyncTask {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        String mCollection;
+        String mDocName;
+        Map<String, String> mResults;
+
+        public FirebaseReadData(GoogleAuthActivity authActivity) {
+            super(authActivity);
+        }
+
+        public void SetQueryInfo(String sCollection, String sDocName) {
+            mCollection = sCollection;
+            mDocName = sDocName;
+        }
+
+        private void OnSuccess()
+        {
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        }
+
+        @Override
+        protected void Run() throws IOException {
+            CollectionReference colRef = db.collection(mCollection);
+            Query q = colRef.whereEqualTo(Constants.USERS_PHONE, mPhone.getText().toString())
+                            .whereEqualTo(Constants.USERS_EMAIL, mEmailTextView.getText().toString());
+
+            q.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        if(task.getResult().isEmpty() == false) {
+                            OnSuccess();
+                        } else {
+                            Toast.makeText(mAuthActivity.getApplicationContext(), R.string.registration_failed, Toast.LENGTH_LONG).show();
+                        }
+                    } else {
+                        Log.d(mAuthActivity.TAG, "Error getting documents: ", task.getException());
+                    }
+                }
+            });
+        }
     }
 }

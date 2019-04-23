@@ -43,4 +43,5 @@
         <item>D</item>
         <item>E</item>
     </string-array>
+    <string name="registration_failed">Registration Failed.</string>
 </resources>

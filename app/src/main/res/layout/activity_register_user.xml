@@ -89,7 +89,6 @@
         android:ems="10"
         android:hint="Name"
         android:inputType="textPersonName"
-        android:text="Name"
         android:textColor="@color/white"
         app:layout_constraintEnd_toStartOf="@+id/guideline10"
         app:layout_constraintHorizontal_bias="0.493"

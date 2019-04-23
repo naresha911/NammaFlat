@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         mRequestsCardView = findViewById(R.id.Requests);
-        mPropertyCardView = findViewById(R.id.Property);
+    mPropertyCardView = findViewById(R.id.Property);
         mEventsCardView = findViewById(R.id.Events);
         mPhotosCardView = findViewById(R.id.Photos);
 
@@ -34,9 +34,9 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Toast.makeText(MainActivity.this,"Display Requests", Toast.LENGTH_LONG).show();
-                //startActivity(new Intent(MainActivity.this, ServiceRequestForm.class));
-                ServiceRequestForm servicesForm = new ServiceRequestForm();
-                servicesForm.show(getSupportFragmentManager(), "example dialog");
+                startActivity(new Intent(MainActivity.this, ShowServiceRequests.class));
+                //ServiceRequestForm servicesForm = new ServiceRequestForm();
+                //servicesForm.show(getSupportFragmentManager(), "example dialog");
             }
         });
 
