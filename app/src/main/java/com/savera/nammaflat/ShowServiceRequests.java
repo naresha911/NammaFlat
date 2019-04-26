@@ -1,33 +1,26 @@
 package com.savera.nammaflat;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.savera.nammaflat.Adapters.ServiceReqAdapter;
 import com.savera.nammaflat.Adapters.ServiceRequestItemClickListener;
-import com.savera.nammaflat.Requests.AsyncLoadSheets;
+import com.savera.nammaflat.Dialogs.ServiceRequestForm;
 import com.savera.nammaflat.Requests.GoogleAsyncTask;
 import com.savera.nammaflat.modal.ServiceRequestEntries;
 import com.savera.nammaflat.modal.ServiceRequestModal;
-import com.savera.nammaflat.modal.SheetsConstants;
 
 import java.io.IOException;
-import java.lang.ref.WeakReference;
 
 import static java.lang.Boolean.TRUE;
 

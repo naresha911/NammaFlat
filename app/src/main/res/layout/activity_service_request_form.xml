@@ -1,91 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ServiceRequestForm"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+    <Button
+        android:id="@+id/srf_cat_project"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="SAVERA"
+        app:layout_constraintEnd_toStartOf="@+id/horiz_guide_end"
+        app:layout_constraintStart_toStartOf="@+id/vert_guide_middle"
+        app:layout_constraintTop_toTopOf="@+id/horiz_guide" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+    <Button
+        android:id="@+id/srf_cat_flat"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="FLAT"
+        app:layout_constraintEnd_toStartOf="@+id/vert_guide_middle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/horiz_guide" />
 
-            <Button
-                android:id="@+id/sr_flat"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Flat"
-                android:focusableInTouchMode="true"/>
+    <android.support.constraint.Guideline
+        android:id="@+id/horiz_guide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="8dp" />
+    <android.support.constraint.Guideline
+        android:id="@+id/vert_guide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="8dp" />
+    <android.support.constraint.Guideline
+        android:id="@+id/horiz_guide_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="8dp" />
 
-            <Button
-                android:id="@+id/sr_savera"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Savera" />
-        </LinearLayout>
+    <android.support.constraint.Guideline
+        android:id="@+id/vert_guide_middle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.50" />
 
-        <EditText
-            android:id="@+id/sr_title"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textShortMessage"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:focusableInTouchMode="true"
-            android:hint="@string/form_title"
-            android:textSize="@dimen/text_size_form_content"
-            />
+    <Spinner
+        android:id="@+id/srf_category"
+        android:layout_width="0dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:dropDownWidth="wrap_content"
+        android:spinnerMode="dialog"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/horiz_guide_end"
+        app:layout_constraintStart_toStartOf="@+id/vert_guide"
+        app:layout_constraintTop_toBottomOf="@+id/srf_cat_flat" />
 
+    <EditText
+        android:id="@+id/srf_title"
+        style="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:hint="@string/form_title"
+        android:inputType="textPersonName"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/horiz_guide_end"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/vert_guide"
+        app:layout_constraintTop_toBottomOf="@+id/srf_category" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Category" />
+    <EditText
+        android:id="@+id/srf_description"
+        style="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="149dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:hint="@string/form_description"
+        android:inputType="textPersonName"
+        android:lines="5"
+        app:layout_constraintEnd_toStartOf="@+id/horiz_guide_end"
+        app:layout_constraintStart_toStartOf="@+id/vert_guide"
+        app:layout_constraintTop_toBottomOf="@+id/srf_title" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:background="?android:attr/listDivider" />
+    <Spinner
+        android:id="@+id/srf_status"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:textSize="20sp"
+        android:dropDownWidth="wrap_content"
+        android:spinnerMode="dialog"
+        app:layout_constraintEnd_toStartOf="@+id/horiz_guide_end"
+        app:layout_constraintStart_toStartOf="@+id/vert_guide"
+        app:layout_constraintTop_toBottomOf="@+id/srf_description" />
 
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/srf_submit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:text="SUBMIT"
+        app:layout_constraintEnd_toStartOf="@+id/horiz_guide_end"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="@+id/vert_guide"
+        app:layout_constraintTop_toBottomOf="@+id/srf_status" />
 
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Description"
-            android:layout_marginTop="20dp"/>
-
-
-
-        <View
-            android:id="@+id/divider"
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:background="?android:attr/listDivider" />
-
-        <EditText
-            android:id="@+id/editText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textMultiLine"
-            android:lines="10"/>
-
-
-    </LinearLayout>
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

@@ -1,4 +1,4 @@
-package com.savera.nammaflat;
+package com.savera.nammaflat.Dialogs;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.savera.nammaflat.R;
 import com.savera.nammaflat.modal.ServiceRequestModal;
 
 import java.util.HashMap;
@@ -44,6 +45,7 @@ public class ServiceRequestForm extends AppCompatDialogFragment {
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
         builder.setView(inflater.inflate(R.layout.activity_service_request_form, null))
+                .setTitle("ADD Service Request")
                 // Add action buttons
                 .setPositiveButton("Submit", new DialogInterface.OnClickListener() {
                     @Override

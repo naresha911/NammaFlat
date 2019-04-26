@@ -6,6 +6,20 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="alertDialogTheme">@style/AppCompatAlertDialogStyle</item>
+    </style>
+
+    <!--https://alexzh.com/2015/10/11/material-style-for-dialogs-in-android-application/-->
+    <!--http://blog.supenta.com/2014/07/02/how-to-style-alertdialogs-like-a-pro/-->
+    <style name="AppCompatAlertDialogStyle" parent="Theme.MaterialComponents.Light.Dialog.Alert">
+        <item name="colorAccent">#546E7A</item>
+        <item name="android:textColorPrimary">#37474F</item>
+        <item name="android:background">@color/btn_bg_light_blue2</item>
+        <item name="android:button">@style/DialogButtonStyle</item>
+    </style>
+
+    <style name="DialogButtonStyle">
+        <item name="android:colorBackground">@color/btn_bg_red</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
