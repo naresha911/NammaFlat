@@ -10,8 +10,9 @@ import com.savera.nammaflat.Adapters.ServiceReqAdapter;
 import com.savera.nammaflat.R;
 
 public class ServiceReqViewHolder extends RecyclerView.ViewHolder {
-    public ImageView imageView;
+   // public ImageView imageView;
     public TextView textViewReqTitle;
+    public TextView textViewReqDescription;
     public TextView textViewReqStatus;
     public TextView textViewReqCategory;
     private ServiceReqAdapter mAdapter;
@@ -20,10 +21,11 @@ public class ServiceReqViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
 
         mAdapter = adapter;
-        imageView = itemView.findViewById(R.id.imageViewReqImage);
-        textViewReqTitle = itemView.findViewById(R.id.textViewTitle);
-        textViewReqStatus = itemView.findViewById(R.id.textViewReqStatus);
-        textViewReqCategory = itemView.findViewById(R.id.textViewReqCategory);
+        //imageView = itemView.findViewById(R.id.imageViewReqImage);
+        textViewReqTitle = itemView.findViewById(R.id.sr_title);
+        textViewReqDescription = itemView.findViewById(R.id.sr_description);
+        textViewReqStatus = itemView.findViewById(R.id.sr_status);
+        textViewReqCategory = itemView.findViewById(R.id.sr_category);
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override

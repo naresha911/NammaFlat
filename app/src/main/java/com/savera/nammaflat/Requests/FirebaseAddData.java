@@ -10,6 +10,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.savera.nammaflat.GoogleAuthActivity;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.util.Map;
 
 public class FirebaseAddData extends GoogleAsyncTask {
@@ -35,15 +36,15 @@ public class FirebaseAddData extends GoogleAsyncTask {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        Log.d(GoogleAuthActivity.TAG, "Successfully Registered");
-                        Toast.makeText(mAuthActivity, "Successfully Registered", Toast.LENGTH_SHORT).show();
+                        Log.d(mAuthActivity.get().TAG, "Successfully Registered");
+                        Toast.makeText(mAuthActivity.get(), "Successfully Registered", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.w(GoogleAuthActivity.TAG, "Registration Failed", e);
-                        Toast.makeText(mAuthActivity, "Registration Failed", Toast.LENGTH_SHORT).show();
+                        Log.w(mAuthActivity.get().TAG, "Registration Failed", e);
+                        Toast.makeText(mAuthActivity.get(), "Registration Failed", Toast.LENGTH_SHORT).show();
                     }
                 });
     }

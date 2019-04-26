@@ -30,7 +30,7 @@ abstract public class GoogleAuthActivity extends AppCompatActivity {
         RETURN_Fail
     }
 
-    public static String TAG = "GoogleAuthActivity";
+    public String TAG = "GoogleAuthActivity";
 
     public String googleAccountName;
 

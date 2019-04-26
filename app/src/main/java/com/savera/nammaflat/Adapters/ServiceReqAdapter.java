@@ -19,8 +19,8 @@ import java.util.List;
 
 public class ServiceReqAdapter extends RecyclerView.Adapter<ServiceReqViewHolder>{
 
-    Context mtx;
-    ServiceRequestEntries mListServiceReqs;
+    private Context mtx;
+    private ServiceRequestEntries mListServiceReqs;
     public ServiceRequestItemClickListener mServiceRequestItemClickListener;
 
     public ServiceReqAdapter(Context ctx, ServiceRequestEntries listReqs) {
@@ -32,7 +32,7 @@ public class ServiceReqAdapter extends RecyclerView.Adapter<ServiceReqViewHolder
     @Override
     public ServiceReqViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         LayoutInflater inflater = LayoutInflater.from(mtx);
-        View view = inflater.inflate(R.layout.service_request_single_card, viewGroup, false);
+        View view = inflater.inflate(R.layout.service_request_single_card2, viewGroup, false);
         return new ServiceReqViewHolder(this, view);
     }
 
@@ -41,8 +41,9 @@ public class ServiceReqAdapter extends RecyclerView.Adapter<ServiceReqViewHolder
         ServiceRequestModal serviceReq = mListServiceReqs.GetAt(i);
 
         serviceReqViewHolder.textViewReqTitle.setText(serviceReq.getReqTitle());
+        serviceReqViewHolder.textViewReqDescription.setText(serviceReq.getReqDescription());
         serviceReqViewHolder.textViewReqStatus.setText("Temp Text");
-        serviceReqViewHolder.textViewReqCategory.setText("1");
+        serviceReqViewHolder.textViewReqCategory.setText("CARPENTRY");
 
         //serviceReqViewHolder.textViewReqCategory.setText(serviceReq.getReqCategory());
     }

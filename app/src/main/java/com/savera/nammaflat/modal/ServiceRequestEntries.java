@@ -1,10 +1,14 @@
 package com.savera.nammaflat.modal;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ServiceRequestEntries {
-    private List<ServiceRequestModal> mServiceEntries;
+    private ArrayList<ServiceRequestModal> mServiceEntries;
 
+    public ServiceRequestEntries() {
+        mServiceEntries = new ArrayList<>();
+    }
     public void Add(ServiceRequestModal serviceRequest) {
         mServiceEntries.add(serviceRequest);
     }

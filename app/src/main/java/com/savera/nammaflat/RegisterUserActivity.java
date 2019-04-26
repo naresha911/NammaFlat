@@ -23,6 +23,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.savera.nammaflat.Requests.GoogleAsyncTask;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
@@ -198,13 +199,16 @@ public class RegisterUserActivity extends GoogleAuthActivity implements AdapterV
     }
 
     private class FirebaseReadData extends GoogleAsyncTask {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
         String mCollection;
         String mDocName;
-        Map<String, String> mResults;
 
         public FirebaseReadData(GoogleAuthActivity authActivity) {
             super(authActivity);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
         }
 
         public void SetQueryInfo(String sCollection, String sDocName) {
@@ -212,31 +216,34 @@ public class RegisterUserActivity extends GoogleAuthActivity implements AdapterV
             mDocName = sDocName;
         }
 
-        private void OnSuccess()
-        {
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-        }
-
         @Override
         protected void Run() throws IOException {
-            CollectionReference colRef = db.collection(mCollection);
-            Query q = colRef.whereEqualTo(Constants.USERS_PHONE, mPhone.getText().toString())
+            mAuthActivity.get().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    progressBar.show();
+                    CollectionReference colRef = mDB.collection(mCollection);
+                    Query q = colRef.whereEqualTo(Constants.USERS_PHONE, mPhone.getText().toString())
                             .whereEqualTo(Constants.USERS_EMAIL, mEmailTextView.getText().toString());
 
-            q.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                    if (task.isSuccessful()) {
-                        if(task.getResult().isEmpty() == false) {
-                            OnSuccess();
-                        } else {
-                            Toast.makeText(mAuthActivity.getApplicationContext(), R.string.registration_failed, Toast.LENGTH_LONG).show();
+                    q.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            progressBar.hide();
+                            if (task.isSuccessful()) {
+                                if(!task.getResult().isEmpty()) {
+                                    startActivity(new Intent(mAuthActivity.get(), MainActivity.class));
+                                } else {
+                                    Toast.makeText(mAuthActivity.get(), R.string.registration_failed, Toast.LENGTH_LONG).show();
+                                }
+                            } else {
+                                Log.d(mAuthActivity.get().TAG, "Error getting documents: ", task.getException());
+                            }
                         }
-                    } else {
-                        Log.d(mAuthActivity.TAG, "Error getting documents: ", task.getException());
-                    }
+                    });
                 }
             });
+
         }
     }
 }

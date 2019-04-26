@@ -19,11 +19,26 @@ public class Constants {
             = "oauth2:profile email https://www.googleapis.com/auth/drive.photos.readonly";
 
     /** Firebase collections and documents */
-    public static final String COLLECTION_SAVERA_USERS = "users";
-    public static final String COLLECTION_SAVERA_FLATS = "savera_flats";
 
     /** Firebase users database fields*/
+    public static final String COLLECTION_SAVERA_USERS = "users";
     public static final String USERS_NAME = "name";
     public static final String USERS_EMAIL = "email";
     public static final String USERS_PHONE = "phone";
+    public static final String USERS_LEVEL = "level";
+
+    /** Firebase Service Request database fields */
+    public static final String SR_COLLECTION = "service_requests";
+    public static final String SR_CATEGORY = "category";
+    public static final String SR_DESCRIPTION = "description";
+    public static final String SR_STATUS = "status";
+    public static final String SR_TITLE = "title";
+    public static final String SR_TYPE = "type";
+    public static final String SR_USERID = "userid";
+
+
+
+
+
+
 }
