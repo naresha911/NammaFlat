@@ -32,8 +32,6 @@ abstract public class GoogleAuthActivity extends AppCompatActivity {
 
     public String TAG = "GoogleAuthActivity";
 
-    public String googleAccountName;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +62,7 @@ abstract public class GoogleAuthActivity extends AppCompatActivity {
             case Constants.REQUEST_ACCOUNT_PICKER:
                 if (resultCode == RESULT_OK && data != null &&
                         data.getExtras() != null) {
-                    googleAccountName =
+                    MyApplication.mGoogleAccountName =
                             data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
                     TriggerDatabaseQuery();
                 } else if (resultCode == RESULT_CANCELED) {
@@ -86,11 +84,14 @@ abstract public class GoogleAuthActivity extends AppCompatActivity {
     }
 
     protected void TriggerDatabaseQuery() {
-        if (googleAccountName != null) {
+        if (MyApplication.mGoogleAccountName != null) {
             SharedPreferences settings = getPreferences(Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = settings.edit();
-            editor.putString(Constants.PREF_ACCOUNT_NAME, googleAccountName);
-            editor.commit();
+
+            if(settings.getString(Constants.PREF_ACCOUNT_NAME, "") != MyApplication.mGoogleAccountName) {
+                editor.putString(Constants.PREF_ACCOUNT_NAME, MyApplication.mGoogleAccountName);
+                editor.commit();
+            }
 
             if (isDeviceOnline(getApplicationContext())) {
                 this.ExecuteQuery();

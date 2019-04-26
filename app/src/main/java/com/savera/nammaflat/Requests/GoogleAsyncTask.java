@@ -14,6 +14,7 @@ import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.savera.nammaflat.Constants;
 import com.savera.nammaflat.GoogleAuthActivity;
+import com.savera.nammaflat.MyApplication;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
@@ -22,7 +23,6 @@ abstract public class GoogleAsyncTask extends AsyncTask<Void, Void, Boolean> {
 
     private static final String TAG = "GoogleAsyncTask";
     private String googleAuthToken;
-    private String googleAccountName;
 
     protected FirebaseFirestore mDB;
     protected WeakReference<GoogleAuthActivity> mAuthActivity;
@@ -33,7 +33,6 @@ abstract public class GoogleAsyncTask extends AsyncTask<Void, Void, Boolean> {
         this.mAuthActivity = new WeakReference<> (authActivity);
         progressBar = new ProgressDialog(authActivity);
         progressBar.setMessage("Reading Data..");
-        googleAccountName = mAuthActivity.get().googleAccountName;
         mDB = FirebaseFirestore.getInstance();
     }
 
@@ -41,9 +40,9 @@ abstract public class GoogleAsyncTask extends AsyncTask<Void, Void, Boolean> {
     protected Boolean doInBackground(Void... voids) {
         try {
             Log.d(TAG,"Requesting token for account: " +
-                    googleAccountName);
+                    MyApplication.mGoogleAccountName);
             googleAuthToken = GoogleAuthUtil.getToken(mAuthActivity.get(),
-                    googleAccountName, Constants.GPHOTOS_SCOPE);
+                    MyApplication.mGoogleAccountName, Constants.GPHOTOS_SCOPE);
 
             Log.d(TAG, "Received Token: " + googleAuthToken);
             //GDController.setAPIToken(googleAuthToken);
