@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -22,12 +23,14 @@ import com.savera.nammaflat.modal.ServiceRequestModal;
 
 import java.io.IOException;
 
+import static com.savera.nammaflat.Constants.REQUEST_SERVICE_REQUEST_ADD;
 import static java.lang.Boolean.TRUE;
 
 public class ShowServiceRequests extends GoogleAuthActivity implements ServiceRequestItemClickListener {
 
     private RecyclerView mRecyclerView;
     private ServiceRequestEntries mServiceRequestsEntries;
+    private ServiceReqAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,9 +80,29 @@ public class ShowServiceRequests extends GoogleAuthActivity implements ServiceRe
     }
 
     public void OnAddServiceRequest(View view) {
-        ServiceRequestForm servicesForm = new ServiceRequestForm();
-        servicesForm.show(getSupportFragmentManager(), "example dialog");
+        startActivityForResult(new Intent(this, ServiceRequestForm.class), REQUEST_SERVICE_REQUEST_ADD);
     }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(requestCode) {
+            case REQUEST_SERVICE_REQUEST_ADD: {
+                if (resultCode == RESULT_OK && data != null &&
+                        data.getExtras() != null) {
+                    ServiceRequestModal requestModal = (ServiceRequestModal) data.getSerializableExtra(Constants.EXTRAS_SERVICE_REQUEST_MODAL);
+                    if(requestModal == null){
+                        Toast.makeText(this, "Failed to add request", Toast.LENGTH_LONG);
+                    }
+                    mServiceRequestsEntries.Add(requestModal);
+                    mAdapter.notifyDataSetChanged();
+                }
+
+            }
+            break;
+        }
+    }
+
+    ////////////////////////////////////////
 
     private class FirebaseRetrieveServiceRequests extends GoogleAsyncTask {
 
@@ -115,9 +138,10 @@ public class ShowServiceRequests extends GoogleAuthActivity implements ServiceRe
                                 }
 
                                 if(!mServiceRequestsEntries.IsEmpty()) {
+                                    mAdapter = new ServiceReqAdapter(mAuthActivity.get(), mServiceRequestsEntries);
                                     mRecyclerView.setHasFixedSize(TRUE);
                                     mRecyclerView.setLayoutManager(new LinearLayoutManager(mAuthActivity.get()));
-                                    mRecyclerView.setAdapter(new ServiceReqAdapter(mAuthActivity.get(), mServiceRequestsEntries));
+                                    mRecyclerView.setAdapter(mAdapter);
                                 }
                             } else {
                                 Log.d(mAuthActivity.get().TAG, "Error getting documents: ", task.getException());

@@ -1,33 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/srf_cat_project"
+    <Spinner
+        android:id="@+id/srf_type"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="SAVERA"
+        android:layout_height="25dp"
+        android:entries="@array/srf_request_type"
+        android:spinnerMode="dialog"
+        android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/horiz_guide_end"
-        app:layout_constraintStart_toStartOf="@+id/vert_guide_middle"
-        app:layout_constraintTop_toTopOf="@+id/horiz_guide" />
-
-    <Button
-        android:id="@+id/srf_cat_flat"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="FLAT"
-        app:layout_constraintEnd_toStartOf="@+id/vert_guide_middle"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/vert_guide"
         app:layout_constraintTop_toTopOf="@+id/horiz_guide" />
 
     <android.support.constraint.Guideline
@@ -36,12 +22,14 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="8dp" />
+
     <android.support.constraint.Guideline
         android:id="@+id/vert_guide"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_begin="8dp" />
+
     <android.support.constraint.Guideline
         android:id="@+id/horiz_guide_end"
         android:layout_width="wrap_content"
@@ -49,35 +37,25 @@
         android:orientation="vertical"
         app:layout_constraintGuide_end="8dp" />
 
-    <android.support.constraint.Guideline
-        android:id="@+id/vert_guide_middle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.50" />
-
     <Spinner
         android:id="@+id/srf_category"
         android:layout_width="0dp"
         android:layout_height="20dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="8dp"
         android:dropDownWidth="wrap_content"
+        android:entries="@array/srf_category"
         android:spinnerMode="dialog"
         android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/horiz_guide_end"
         app:layout_constraintStart_toStartOf="@+id/vert_guide"
-        app:layout_constraintTop_toBottomOf="@+id/srf_cat_flat" />
+        app:layout_constraintTop_toBottomOf="@+id/srf_type" />
 
     <EditText
         android:id="@+id/srf_title"
         style="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="8dp"
         android:ems="10"
         android:hint="@string/form_title"
         android:inputType="textPersonName"
@@ -94,9 +72,7 @@
         style="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="149dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="8dp"
         android:ems="10"
         android:hint="@string/form_description"
         android:inputType="textPersonName"
@@ -109,27 +85,23 @@
         android:id="@+id/srf_status"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="8dp"
-        android:textSize="20sp"
         android:dropDownWidth="wrap_content"
+        android:entries="@array/srf_status"
         android:spinnerMode="dialog"
+        android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/horiz_guide_end"
         app:layout_constraintStart_toStartOf="@+id/vert_guide"
         app:layout_constraintTop_toBottomOf="@+id/srf_description" />
 
     <Button
         android:id="@+id/srf_submit"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="76dp"
+        android:onClick="OnSubmitRequestForm"
         android:text="SUBMIT"
-        app:layout_constraintEnd_toStartOf="@+id/horiz_guide_end"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="@+id/vert_guide"
-        app:layout_constraintTop_toBottomOf="@+id/srf_status" />
+        app:layout_constraintTop_toBottomOf="@+id/srf_status"
+        tools:layout_editor_absoluteX="161dp" />
 
 </android.support.constraint.ConstraintLayout>

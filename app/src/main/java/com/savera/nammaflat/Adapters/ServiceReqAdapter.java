@@ -40,8 +40,8 @@ public class ServiceReqAdapter extends RecyclerView.Adapter<ServiceReqViewHolder
     public void onBindViewHolder(@NonNull ServiceReqViewHolder serviceReqViewHolder, int i) {
         ServiceRequestModal serviceReq = mListServiceReqs.GetAt(i);
 
-        serviceReqViewHolder.textViewReqTitle.setText(serviceReq.getReqTitle());
-        serviceReqViewHolder.textViewReqDescription.setText(serviceReq.getReqDescription());
+        serviceReqViewHolder.textViewReqTitle.setText(serviceReq.getTitle());
+        serviceReqViewHolder.textViewReqDescription.setText(serviceReq.getDescription());
         serviceReqViewHolder.textViewReqStatus.setText("Temp Text");
         serviceReqViewHolder.textViewReqCategory.setText("CARPENTRY");
 

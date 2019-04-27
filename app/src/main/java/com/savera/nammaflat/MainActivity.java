@@ -7,6 +7,7 @@ import android.support.v7.widget.CardView;
 import android.view.View;
 import android.widget.Toast;
 
+import com.savera.nammaflat.Utils.SharedPrefrncsUtils;
 import com.savera.nammaflat.modal.ServiceRequestModal;
 
 //https://www.youtube.com/watch?v=uJDLT8nh2ps
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         mRequestsCardView = findViewById(R.id.Requests);
-    mPropertyCardView = findViewById(R.id.Property);
+        mPropertyCardView = findViewById(R.id.Property);
         mEventsCardView = findViewById(R.id.Events);
         mPhotosCardView = findViewById(R.id.Photos);
 
@@ -64,13 +65,6 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-
-
-
-        //startActivity(new Intent(MainActivity.this, SignupActivity.class));
-
     }
-
-
 
 }

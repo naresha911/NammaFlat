@@ -19,6 +19,7 @@ import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.google.android.gms.common.AccountPicker;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.savera.nammaflat.Utils.SharedPrefrncsUtils;
 
 import java.io.IOException;
 
@@ -31,10 +32,12 @@ abstract public class GoogleAuthActivity extends AppCompatActivity {
     }
 
     public String TAG = "GoogleAuthActivity";
+    protected boolean mSkipUserRegisterValidation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mSkipUserRegisterValidation = false;
     }
 
     abstract protected RETURN_CODES ExecuteQuery();
@@ -79,27 +82,36 @@ abstract public class GoogleAuthActivity extends AppCompatActivity {
                     // We had to sign in - now we can finish off the token request.
                     TriggerDatabaseQuery();
                 }
+                break;
+            case Constants.REQUEST_REGISTER_USER:
+                if(resultCode == RESULT_OK) {
+                    // We had to sign in - now we can finish off the token request.
+                    TriggerDatabaseQuery();
+                }
+                break;
         }
-        super.onActivityResult(requestCode, resultCode, data);
     }
 
     protected void TriggerDatabaseQuery() {
-        if (MyApplication.mGoogleAccountName != null) {
-            SharedPreferences settings = getPreferences(Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = settings.edit();
+        if(!IsUserRegistered()) {
+            startActivityForResult(new Intent(this, RegisterUserActivity.class), Constants.REQUEST_REGISTER_USER);
+            return;
+        }
 
-            if(settings.getString(Constants.PREF_ACCOUNT_NAME, "") != MyApplication.mGoogleAccountName) {
-                editor.putString(Constants.PREF_ACCOUNT_NAME, MyApplication.mGoogleAccountName);
-                editor.commit();
-            }
-
-            if (isDeviceOnline(getApplicationContext())) {
-                this.ExecuteQuery();
-            } else {
-                Toast.makeText(this, "Device not online", Toast.LENGTH_LONG).show();
-            }
-        } else {
+        if(MyApplication.mGoogleAccountName == null) {
             chooseGoogleAccount();
+            return;
+        }
+
+        //User google account and user has registered
+        if(SharedPrefrncsUtils.getDefaults(Constants.PREF_ACCOUNT_NAME, this) != MyApplication.mGoogleAccountName) {
+            SharedPrefrncsUtils.setDefaults(Constants.PREF_ACCOUNT_NAME, MyApplication.mGoogleAccountName, this);
+        }
+
+        if (isDeviceOnline(getApplicationContext())) {
+            this.ExecuteQuery();
+        } else {
+            Toast.makeText(this, "Device not online", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -155,6 +167,21 @@ abstract public class GoogleAuthActivity extends AppCompatActivity {
         } else if (connectionStatusCode != ConnectionResult.SUCCESS ) {
             return false;
         }
+        return true;
+    }
+
+    private boolean IsUserRegistered() {
+        if(mSkipUserRegisterValidation)
+            return true;
+
+        String userEmail = SharedPrefrncsUtils.getDefaults(Constants.PREF_ACCOUNT_NAME, this);
+        if(userEmail == null || userEmail.isEmpty())
+            return false;
+
+        String userDetails = SharedPrefrncsUtils.getDefaults(Constants.USERS_ID, this);
+        if(userDetails == null || userDetails.isEmpty())
+            return false;
+
         return true;
     }
 

@@ -3,17 +3,16 @@ package com.savera.nammaflat.modal;
 import com.savera.nammaflat.Constants;
 
 import java.io.Serializable;
-import java.util.ConcurrentModificationException;
 import java.util.List;
 import java.util.Map;
 
 public class ServiceRequestModal implements Serializable {
-    private Long ReqType;
-    private Long ReqCategory;
-    private String ReqTitle;
-    private String ReqDescription;
-    private Long StatusID;
-    private String UserId;
+    private Long type;
+    private Long category;
+    private String title;
+    private String description;
+    private Long status;
+    private String userid;
 
     public void FillData(List<String> dataStrings)
     {
@@ -21,77 +20,85 @@ public class ServiceRequestModal implements Serializable {
             return;
 
         //this.srModelID = dataStrings.get(0);
-        ReqTitle = dataStrings.get(1);
-        ReqDescription = dataStrings.get(2);
-        StatusID = Long.parseLong(dataStrings.get(4));
-        UserId = dataStrings.get(5);
-        ReqCategory = Long.parseLong(dataStrings.get(6));
+        title = dataStrings.get(1);
+        description = dataStrings.get(2);
+        status = Long.parseLong(dataStrings.get(4));
+        userid = dataStrings.get(5);
+        category = Long.parseLong(dataStrings.get(6));
     }
 
     public void FillData(Map<String,Object> dataStrings)
     {
         Object obj = dataStrings.get(Constants.SR_TYPE);
         if(obj != null)
-            ReqType = (Long) obj;
+            type = (Long) obj;
 
         obj = dataStrings.get(Constants.SR_CATEGORY);
         if(obj != null)
-            ReqCategory = (Long) obj;
+            category = (Long) obj;
 
         obj = dataStrings.get(Constants.SR_TITLE);
         if(obj != null)
-            ReqTitle = (String) obj;
+            title = (String) obj;
 
         obj = dataStrings.get(Constants.SR_DESCRIPTION);
         if(obj != null)
-            ReqDescription = (String) obj;
+            description = (String) obj;
 
         obj = dataStrings.get(Constants.SR_STATUS);
         if(obj != null)
-            StatusID = (Long) obj;
+            status = (Long) obj;
 
         obj = dataStrings.get(Constants.SR_USERID);
         if(obj != null)
-            UserId = (String) obj;
+            userid = (String) obj;
     }
 
-    public String getReqTitle() {
-        return ReqTitle;
+    public Long getType() {
+        return type;
     }
 
-    public void setReqTitle(String reqTitle) {
-        ReqTitle = reqTitle;
+    public void setType(Long type) {
+        this.type = type;
     }
 
-    public String getReqDescription() {
-        return ReqDescription;
+    public String getTitle() {
+        return title;
     }
 
-    public void setReqDescription(String reqDescription) {
-        ReqDescription = reqDescription;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public Long getStatusID() {
-        return StatusID;
+    public String getDescription() {
+        return description;
     }
 
-    public void setStatusID(Long statusID) {
-        StatusID = statusID;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getUserId() {
-        return UserId;
+    public Long getStatus() {
+        return status;
     }
 
-    public void setUserId(String userId) {
-        UserId = userId;
+    public void setStatus(Long status) {
+        this.status = status;
     }
 
-    public Long getReqCategory() {
-        return ReqCategory;
+    public String getUserid() {
+        return userid;
     }
 
-    public void setReqCategory(Long reqCategory) {
-        ReqCategory = reqCategory;
+    public void setUserid(String user_id) {
+        this.userid = user_id;
+    }
+
+    public Long getCategory() {
+        return category;
+    }
+
+    public void setCategory(Long category) {
+        this.category = category;
     }
 }

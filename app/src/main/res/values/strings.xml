@@ -43,5 +43,21 @@
         <item>D</item>
         <item>E</item>
     </string-array>
+    <string-array name="srf_category">
+        <item>Carpentry</item>
+        <item>Painting</item>
+        <item>Plumbing</item>
+        <item>Cleaning</item>
+        <item>Electrical</item>
+    </string-array>
+    <string-array name="srf_status">
+        <item>Pending</item>
+        <item>Done</item>
+        <item>Rejected</item>
+    </string-array>
+    <string-array name="srf_request_type">
+        <item>Flat</item>
+        <item>Savera</item>
+    </string-array>
     <string name="registration_failed">Registration Failed.</string>
 </resources>
