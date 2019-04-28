@@ -42,5 +42,10 @@ public class Constants {
     public static final String SR_TYPE = "type";
     public static final String SR_USERID = "userid";
 
-
+    /** Firebase Events database fields */
+    public static final String EV_COLLECTION = "events";
+    public static final String EV_EVENT_TYPE = "eventtype";
+    public static final String EV_TITLE = "title";
+    public static final String EV_DESCRIPTION = "description";
+    public static final String EV_DATE = "eventdate";
 }

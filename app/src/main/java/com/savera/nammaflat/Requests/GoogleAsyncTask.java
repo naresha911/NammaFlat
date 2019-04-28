@@ -1,17 +1,12 @@
 package com.savera.nammaflat.Requests;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.UserRecoverableAuthException;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.savera.nammaflat.Constants;
 import com.savera.nammaflat.GoogleAuthActivity;
 import com.savera.nammaflat.MyApplication;
@@ -23,17 +18,20 @@ abstract public class GoogleAsyncTask extends AsyncTask<Void, Void, Boolean> {
 
     private static final String TAG = "GoogleAsyncTask";
     private String googleAuthToken;
+    private WeakReference<GoogleAuthActivity> mAuthActivity;
 
-    protected FirebaseFirestore mDB;
-    protected WeakReference<GoogleAuthActivity> mAuthActivity;
     protected ProgressDialog progressBar;
     protected Exception mLastError = null;
+    protected AsyncTaskListener mGoogleTaskListener;
 
     public GoogleAsyncTask(GoogleAuthActivity authActivity) {
-        this.mAuthActivity = new WeakReference<> (authActivity);
         progressBar = new ProgressDialog(authActivity);
         progressBar.setMessage("Reading Data..");
-        mDB = FirebaseFirestore.getInstance();
+        mGoogleTaskListener = null;
+    }
+
+    protected void SetGoogleAsyncTaskListener(AsyncTaskListener asyncTaskListener) {
+        mGoogleTaskListener = asyncTaskListener;
     }
 
     @Override

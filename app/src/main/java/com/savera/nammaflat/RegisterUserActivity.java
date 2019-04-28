@@ -181,7 +181,7 @@ public class RegisterUserActivity extends GoogleAuthActivity implements View.OnC
                 @Override
                 public void run() {
                     progressBar.show();
-                    CollectionReference colRef = mDB.collection(mCollection);
+                    CollectionReference colRef = mDB.getReference().collection(mCollection);
                     Query q = colRef.whereEqualTo(Constants.USERS_PHONE, mPhone.getText().toString())
                             .whereEqualTo(Constants.USERS_EMAIL, mEmailTextView.getText().toString());
 
