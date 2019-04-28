@@ -1,4 +1,4 @@
-package com.savera.nammaflat.Dialogs;
+package com.savera.nammaflat;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -34,6 +34,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.savera.nammaflat.Constants;
 import com.savera.nammaflat.GoogleAuthActivity;
 import com.savera.nammaflat.R;
+import com.savera.nammaflat.Requests.AsyncTaskListener;
+import com.savera.nammaflat.Requests.Firebase.FBQueryAddDataAsyncTask;
+import com.savera.nammaflat.Requests.Firebase.FirebaseAsyncTask;
 import com.savera.nammaflat.Requests.GoogleAsyncTask;
 import com.savera.nammaflat.Utils.SharedPrefrncsUtils;
 import com.savera.nammaflat.modal.ServiceRequestModal;
@@ -50,6 +53,7 @@ public class ServiceRequestForm extends GoogleAuthActivity {
     private Spinner  mStatus;
     private Button   mSubmit;
     private ServiceRequestModal mSrModal;
+    private FBQueryAddDataAsyncTask mAddDataAsyncTask;
 
     private static final String TAG = "RequestForm";
 
@@ -73,8 +77,33 @@ public class ServiceRequestForm extends GoogleAuthActivity {
 
     @Override
     protected RETURN_CODES ExecuteQuery() {
-        FirebaseAddServiceRequest addServiceRequest = new FirebaseAddServiceRequest(this);
-        addServiceRequest.execute();
+        int nReqType = mReqType.getSelectedItemPosition();
+        int nCategory = mCategory.getSelectedItemPosition();
+        String sTitle = mTitle.getText().toString();
+        String sDescrip = mDescription.getText().toString();
+        int nStatus = mStatus.getSelectedItemPosition();
+
+        if (sTitle.isEmpty() || sDescrip.isEmpty()) {
+            Toast.makeText(this, "Complete all Fields", Toast.LENGTH_SHORT).show();
+            return RETURN_CODES.RETURN_Fail;
+        }
+
+        String sUserID = SharedPrefrncsUtils.getDefaults(Constants.USERS_ID, this);
+
+        Map<String, Object> request = new HashMap<>();
+        request.put(Constants.SR_TYPE, Long.valueOf(nReqType));
+        request.put(Constants.SR_CATEGORY, Long.valueOf(nCategory));
+        request.put(Constants.SR_TITLE, sTitle);
+        request.put(Constants.SR_DESCRIPTION, sDescrip);
+        request.put(Constants.SR_STATUS, Long.valueOf(nStatus));
+        request.put(Constants.SR_USERID, sUserID);
+
+        mSrModal = new ServiceRequestModal();
+        mSrModal.FillData(request);
+
+        mAddDataAsyncTask = new FBQueryAddDataAsyncTask(this);
+        mAddDataAsyncTask.AddNewDocument(Constants.SR_COLLECTION, mSrModal);
+        mAddDataAsyncTask.ExecuteFBQuery();
         return RETURN_CODES.RETURN_Sucess;
     }
 
@@ -90,68 +119,18 @@ public class ServiceRequestForm extends GoogleAuthActivity {
         TriggerDatabaseQuery();
     }
 
-    private void OnFirebaseSuccessQuery() {
-        Intent retIntent = new Intent();
-        retIntent.putExtra(Constants.EXTRAS_SERVICE_REQUEST_MODAL, mSrModal);
-        setResult(RESULT_OK, retIntent);
+    @Override
+    public void OnFBQueryComplete() {
+        if(mAddDataAsyncTask.IsTaskSuccessfull()) {
+            Intent retIntent = new Intent();
+            retIntent.putExtra(Constants.EXTRAS_SERVICE_REQUEST_MODAL, mSrModal);
+            setResult(RESULT_OK, retIntent);
+            finish();
+            return;
+        }
+        Toast.makeText(this, "Failed to Add Service Request", Toast.LENGTH_LONG);
+        setResult(RESULT_OK);
         finish();
-    }
-
-    private class FirebaseAddServiceRequest extends GoogleAsyncTask {
-
-        public FirebaseAddServiceRequest(GoogleAuthActivity authActivity) {
-            super(authActivity);
-        }
-
-        @Override
-        protected void Run() throws IOException {
-            mAuthActivity.get().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    int nReqType = mReqType.getSelectedItemPosition();
-                    int nCategory = mCategory.getSelectedItemPosition();
-                    String sTitle = mTitle.getText().toString();
-                    String sDescrip = mDescription.getText().toString();
-                    int nStatus = mStatus.getSelectedItemPosition();
-
-                    if (sTitle.isEmpty() || sDescrip.isEmpty()) {
-                        Toast.makeText(mAuthActivity.get(), "Complete all Fields", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-
-                    String sUserID = SharedPrefrncsUtils.getDefaults(Constants.USERS_ID, mAuthActivity.get());
-
-                    Map<String, Object> request = new HashMap<>();
-                    request.put(Constants.SR_TYPE, Long.valueOf(nReqType));
-                    request.put(Constants.SR_CATEGORY, Long.valueOf(nCategory));
-                    request.put(Constants.SR_TITLE, sTitle);
-                    request.put(Constants.SR_DESCRIPTION, sDescrip);
-                    request.put(Constants.SR_STATUS, Long.valueOf(nStatus));
-                    request.put(Constants.SR_USERID, sUserID);
-
-                    mSrModal = new ServiceRequestModal();
-                    mSrModal.FillData(request);
-
-                    CollectionReference srColRef = db.collection(Constants.SR_COLLECTION);
-                    srColRef.add(mSrModal).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DocumentReference> task) {
-                            if (task.isSuccessful()) {
-                                if (task.getResult() != null) {
-                                    OnFirebaseSuccessQuery();
-                                }
-
-
-                            } else {
-
-                            }
-                        }
-
-                    });
-                }
-            });
-
-        }
     }
 }
 

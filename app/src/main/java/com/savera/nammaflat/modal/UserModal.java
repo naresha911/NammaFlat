@@ -1,8 +1,9 @@
 package com.savera.nammaflat.modal;
 
 import java.io.Serializable;
+import java.util.Map;
 
-public class UserModal implements Serializable {
+public class UserModal extends FBModal {
     String name;
     String email;
     String phone;
@@ -39,5 +40,10 @@ public class UserModal implements Serializable {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    @Override
+    public void FillData(Map<String, Object> documentData) {
+
     }
 }

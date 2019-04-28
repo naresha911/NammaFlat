@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-public class ServiceRequestModal implements Serializable {
+public class ServiceRequestModal extends FBModal {
     private Long type;
     private Long category;
     private String title;
@@ -27,6 +27,7 @@ public class ServiceRequestModal implements Serializable {
         category = Long.parseLong(dataStrings.get(6));
     }
 
+    @Override
     public void FillData(Map<String,Object> dataStrings)
     {
         Object obj = dataStrings.get(Constants.SR_TYPE);

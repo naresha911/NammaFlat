@@ -3,12 +3,7 @@ package com.savera.nammaflat;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 
-import com.savera.nammaflat.Requests.AsyncTaskListener;
-import com.savera.nammaflat.Requests.ShowEventsAsyncTask;
-
-import java.util.ArrayList;
-
-public class ShowEventsActivity extends GoogleAuthActivity implements AsyncTaskListener {
+public class ShowEventsActivity extends GoogleAuthActivity {
     private RecyclerView mRecyclerView;
 
     @Override
@@ -19,8 +14,8 @@ public class ShowEventsActivity extends GoogleAuthActivity implements AsyncTaskL
 
     @Override
     protected RETURN_CODES ExecuteQuery() {
-        ShowEventsAsyncTask eventsAsyncTask = new ShowEventsAsyncTask(this);
-        eventsAsyncTask.execute();
+        //ShowEventsAsyncTask eventsAsyncTask = new ShowEventsAsyncTask(this);
+        //eventsAsyncTask.execute();
         return RETURN_CODES.RETURN_Sucess;
     }
 
@@ -29,8 +24,4 @@ public class ShowEventsActivity extends GoogleAuthActivity implements AsyncTaskL
 
     }
 
-    @Override
-    public void SetFBResult(ArrayList<Object> resultObjs) {
-
-    }
 }

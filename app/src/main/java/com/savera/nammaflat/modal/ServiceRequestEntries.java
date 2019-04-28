@@ -12,6 +12,20 @@ public class ServiceRequestEntries {
     public void Add(ServiceRequestModal serviceRequest) {
         mServiceEntries.add(serviceRequest);
     }
+    public void Add(ArrayList<Object> serviceRequests) {
+        mServiceEntries.clear();
+
+        if(serviceRequests.isEmpty())
+            return;
+
+        if(!(serviceRequests.get(0) instanceof ServiceRequestModal))
+            return;
+
+        for (int ii = 0; ii<serviceRequests.size(); ++ii) {
+            ServiceRequestModal srModal = (ServiceRequestModal) serviceRequests.get(ii);
+            mServiceEntries.add(srModal);
+        }
+    }
 
     public void Remove(ServiceRequestModal serviceRequestModal) {
         if(mServiceEntries.isEmpty())

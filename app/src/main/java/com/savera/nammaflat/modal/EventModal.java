@@ -5,12 +5,13 @@ import com.savera.nammaflat.Constants;
 import java.util.Date;
 import java.util.Map;
 
-public class EventModal {
-    private Long   eventtype
+public class EventModal extends FBModal{
+    private Long   eventtype;
     private String title;
     private String description;
     private Date   eventdate;
 
+    @Override
     public void FillData(Map<String, Object> modalData) {
         Object obj = modalData.get(Constants.EV_EVENT_TYPE);
         if(obj != null)

@@ -19,11 +19,12 @@ import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.google.android.gms.common.AccountPicker;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.savera.nammaflat.Requests.AsyncTaskListener;
 import com.savera.nammaflat.Utils.SharedPrefrncsUtils;
 
 import java.io.IOException;
 
-abstract public class GoogleAuthActivity extends AppCompatActivity {
+abstract public class GoogleAuthActivity extends AppCompatActivity implements AsyncTaskListener {
 
 
     public enum RETURN_CODES {

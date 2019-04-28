@@ -19,7 +19,7 @@
         <activity android:name=".RegisterUserActivity" />
         <activity android:name=".GoogleAuthActivity" />
         <activity android:name=".AddUsersActivity" />
-        <activity android:name=".Dialogs.ServiceRequestForm" />
+        <activity android:name=".ServiceRequestForm" />
         <activity android:name=".ShowServiceRequests" />
         <activity android:name=".AuthActivity" />
         <activity android:name=".Login_Activity" />

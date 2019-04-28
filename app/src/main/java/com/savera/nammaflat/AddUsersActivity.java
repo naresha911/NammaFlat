@@ -10,8 +10,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.savera.nammaflat.Requests.FirebaseAddData;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
@@ -65,9 +63,9 @@ public class AddUsersActivity extends GoogleAuthActivity implements AdapterView.
 
         String sDocName = Constants.PROJECT_NAME + sBlockNumber + sFlatNumber;
 
-        FirebaseAddData addDataQuery = new FirebaseAddData(this);
-        addDataQuery.SetQueryInfo("users", sDocName, request);
-        addDataQuery.execute();
+      //  FirebaseAddData addDataQuery = new FirebaseAddData(this);
+      //  addDataQuery.SetQueryInfo("users", sDocName, request);
+      //  addDataQuery.execute();
         return RETURN_Sucess;
     }
 
@@ -163,4 +161,8 @@ public class AddUsersActivity extends GoogleAuthActivity implements AdapterView.
         return true;
     }
 
+    @Override
+    public void OnFBQueryComplete() {
+
+    }
 }

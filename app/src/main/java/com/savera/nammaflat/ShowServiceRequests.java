@@ -1,27 +1,20 @@
 package com.savera.nammaflat;
 
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.savera.nammaflat.Adapters.ServiceReqAdapter;
 import com.savera.nammaflat.Adapters.ServiceRequestItemClickListener;
-import com.savera.nammaflat.Dialogs.ServiceRequestForm;
-import com.savera.nammaflat.Requests.GoogleAsyncTask;
+import com.savera.nammaflat.Requests.AsyncTaskListener;
+import com.savera.nammaflat.Requests.Firebase.FBQueryGetDataAsyncTask;
 import com.savera.nammaflat.modal.ServiceRequestEntries;
 import com.savera.nammaflat.modal.ServiceRequestModal;
 
-import java.io.IOException;
+import java.util.ArrayList;
 
 import static com.savera.nammaflat.Constants.REQUEST_SERVICE_REQUEST_ADD;
 import static java.lang.Boolean.TRUE;
@@ -31,6 +24,7 @@ public class ShowServiceRequests extends GoogleAuthActivity implements ServiceRe
     private RecyclerView mRecyclerView;
     private ServiceRequestEntries mServiceRequestsEntries;
     private ServiceReqAdapter mAdapter;
+    private FBQueryGetDataAsyncTask mGetDataAsyncTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +36,8 @@ public class ShowServiceRequests extends GoogleAuthActivity implements ServiceRe
 
     @Override
     protected RETURN_CODES ExecuteQuery() {
-        FirebaseRetrieveServiceRequests retrieveServiceRequests = new FirebaseRetrieveServiceRequests(this);
-        retrieveServiceRequests.execute();
+        mGetDataAsyncTask = new FBQueryGetDataAsyncTask(this);
+        mGetDataAsyncTask.RunGetAllDocumentsQuery(Constants.SR_COLLECTION);
         return RETURN_CODES.RETURN_Sucess;
     }
 
@@ -102,56 +96,26 @@ public class ShowServiceRequests extends GoogleAuthActivity implements ServiceRe
         }
     }
 
-    ////////////////////////////////////////
+    @Override
+    public void OnFBQueryComplete() {
+        if(!mGetDataAsyncTask.IsTaskSuccessfull())
+            return;
 
-    private class FirebaseRetrieveServiceRequests extends GoogleAsyncTask {
+        if(mServiceRequestsEntries != null)
+            mServiceRequestsEntries.Reset();
+        else
+            mServiceRequestsEntries = new ServiceRequestEntries();
 
-        public FirebaseRetrieveServiceRequests(GoogleAuthActivity authActivity) {
-            super(authActivity);
+        ArrayList<Object> resultObjs = mGetDataAsyncTask.getResults(ServiceRequestModal.class.getName());
+        if(!resultObjs.isEmpty())
+            mServiceRequestsEntries.Add(resultObjs);
+
+        if(!mServiceRequestsEntries.IsEmpty()) {
+            mAdapter = new ServiceReqAdapter(this, mServiceRequestsEntries);
+            mRecyclerView.setHasFixedSize(TRUE);
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+            mRecyclerView.setAdapter(mAdapter);
         }
 
-        @Override
-        protected void onPostExecute(Boolean aBoolean) {
-            super.onPostExecute(aBoolean);
-
-        }
-
-        @Override
-        protected void Run() throws IOException {
-            mAuthActivity.get().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    CollectionReference colRef = mDB.collection(Constants.SR_COLLECTION);
-                    colRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                if(mServiceRequestsEntries != null)
-                                    mServiceRequestsEntries.Reset();
-                                else
-                                    mServiceRequestsEntries = new ServiceRequestEntries();
-                                for(DocumentSnapshot documentSnapshot : task.getResult()) {
-                                    ServiceRequestModal srModel = new ServiceRequestModal();
-                                    srModel.FillData(documentSnapshot.getData());
-                                    mServiceRequestsEntries.Add(srModel);
-                                    Log.d(mAuthActivity.get().TAG, documentSnapshot.getId(), task.getException());
-                                }
-
-                                if(!mServiceRequestsEntries.IsEmpty()) {
-                                    mAdapter = new ServiceReqAdapter(mAuthActivity.get(), mServiceRequestsEntries);
-                                    mRecyclerView.setHasFixedSize(TRUE);
-                                    mRecyclerView.setLayoutManager(new LinearLayoutManager(mAuthActivity.get()));
-                                    mRecyclerView.setAdapter(mAdapter);
-                                }
-                            } else {
-                                Log.d(mAuthActivity.get().TAG, "Error getting documents: ", task.getException());
-                            }
-                        }
-                    });
-                }
-            });
-
-
-        }
     }
 }

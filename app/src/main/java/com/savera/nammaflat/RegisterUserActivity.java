@@ -17,23 +17,30 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.savera.nammaflat.Requests.AsyncTaskListener;
+import com.savera.nammaflat.Requests.Firebase.FBQueryGetDataAsyncTask;
 import com.savera.nammaflat.Requests.GoogleAsyncTask;
 import com.savera.nammaflat.Utils.SharedPrefrncsUtils;
+import com.savera.nammaflat.modal.UserModal;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.savera.nammaflat.GoogleAuthActivity.RETURN_CODES.RETURN_Sucess;
 
 public class RegisterUserActivity extends GoogleAuthActivity implements View.OnClickListener {
 
-    Spinner mBlock;
-    Spinner mFlatNumber;
-    EditText mName;
-    Button mEmail;
-    TextView mEmailTextView;
-    EditText mPhone;
-    Button mRegister;
-    QUERY_STAGE mQueryStage;
+    private Spinner mBlock;
+    private Spinner mFlatNumber;
+    private EditText mName;
+    private Button mEmail;
+    private TextView mEmailTextView;
+    private EditText mPhone;
+    private Button mRegister;
+    private QUERY_STAGE mQueryStage;
+    private FBQueryGetDataAsyncTask mGetDataTask;
 
     private enum QUERY_STAGE {
         QUERY_EMAIL,
@@ -135,9 +142,12 @@ public class RegisterUserActivity extends GoogleAuthActivity implements View.OnC
     }
 
     private boolean RegisterUser() {
-        FirebaseReadData readDataQuery = new FirebaseReadData(this);
-        readDataQuery.SetQueryInfo(Constants.COLLECTION_SAVERA_USERS, "");
-        readDataQuery.execute();
+        Map<String, String> fieldValues = new HashMap<>();
+        fieldValues.put(Constants.USERS_PHONE, mPhone.getText().toString());
+        fieldValues.put(Constants.USERS_EMAIL, mEmailTextView.getText().toString());
+
+        mGetDataTask = new FBQueryGetDataAsyncTask(this);
+        mGetDataTask.RunGetAllDocumentsGivenFields(Constants.COLLECTION_SAVERA_USERS, fieldValues);
         return true;
     }
 
@@ -149,60 +159,12 @@ public class RegisterUserActivity extends GoogleAuthActivity implements View.OnC
         SharedPrefrncsUtils.setDefaults(Constants.USERS_LEVEL, documentSnapshot.get(Constants.USERS_NAME).toString(),this);
     }
 
-    public void OnFirebaseQuerySuccess(DocumentSnapshot documentSnapshot) {
-        SaveUserDataToPreferences(documentSnapshot);
+    @Override
+    public void OnFBQueryComplete() {
+        ArrayList<Object> resultObjs = mGetDataTask.getResults(UserModal.class.getName());
+       // SaveUserDataToPreferences(resultObjs[0]);
         setResult(RESULT_OK);
         finish();
     }
 
-    ///////////////////QUERY/////////////////////////////////
-
-    private class FirebaseReadData extends GoogleAsyncTask {
-        String mCollection;
-        String mDocName;
-
-        public FirebaseReadData(GoogleAuthActivity authActivity) {
-            super(authActivity);
-        }
-
-        @Override
-        protected void onPostExecute(Boolean aBoolean) {
-            super.onPostExecute(aBoolean);
-        }
-
-        public void SetQueryInfo(String sCollection, String sDocName) {
-            mCollection = sCollection;
-            mDocName = sDocName;
-        }
-
-        @Override
-        protected void Run() throws IOException {
-            mAuthActivity.get().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    progressBar.show();
-                    CollectionReference colRef = mDB.getReference().collection(mCollection);
-                    Query q = colRef.whereEqualTo(Constants.USERS_PHONE, mPhone.getText().toString())
-                            .whereEqualTo(Constants.USERS_EMAIL, mEmailTextView.getText().toString());
-
-                    q.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            progressBar.hide();
-                            if (task.isSuccessful()) {
-                                if(!task.getResult().isEmpty()) {
-                                    OnFirebaseQuerySuccess(task.getResult().getDocuments().get(0));
-                                } else {
-                                    Toast.makeText(mAuthActivity.get(), R.string.registration_failed, Toast.LENGTH_LONG).show();
-                                }
-                            } else {
-                                Log.d(mAuthActivity.get().TAG, "Error getting documents: ", task.getException());
-                            }
-                        }
-                    });
-                }
-            });
-
-        }
-    }
 }
