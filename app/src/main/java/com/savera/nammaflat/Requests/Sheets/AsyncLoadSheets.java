@@ -1,9 +1,9 @@
-package com.savera.nammaflat.Requests;
+package com.savera.nammaflat.Requests.Sheets;
 
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.model.ValueRange;
 import com.savera.nammaflat.AuthActivity;
-import com.savera.nammaflat.modal.ServiceRequestEntries;
+import com.savera.nammaflat.modal.FBModalEntityList;
 import com.savera.nammaflat.modal.ServiceRequestModal;
 
 import java.io.IOException;
@@ -24,7 +24,7 @@ public class AsyncLoadSheets extends SheetsAsyncTask {
         ValueRange response = request.execute();
         List<List<Object>> values = response.getValues();
         if (values != null) {
-            mServiceRequests = new ServiceRequestEntries();
+            mServiceRequests = new FBModalEntityList();
             for (List row : values) {
                 if(!row.isEmpty()) {
                     List<String> colStrs = new ArrayList<>();

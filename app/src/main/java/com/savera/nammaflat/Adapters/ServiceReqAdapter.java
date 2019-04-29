@@ -3,27 +3,22 @@ package com.savera.nammaflat.Adapters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.savera.nammaflat.R;
-import com.savera.nammaflat.modal.ServiceRequestEntries;
+import com.savera.nammaflat.modal.FBModalEntityList;
 import com.savera.nammaflat.modal.ServiceRequestModal;
 import com.savera.nammaflat.viewholders.ServiceReqViewHolder;
-
-import java.util.List;
 
 public class ServiceReqAdapter extends RecyclerView.Adapter<ServiceReqViewHolder>{
 
     private Context mtx;
-    private ServiceRequestEntries mListServiceReqs;
-    public ServiceRequestItemClickListener mServiceRequestItemClickListener;
+    private FBModalEntityList<ServiceRequestModal> mListServiceReqs;
+    public RecyclerViewItemClickListener mRecyclerViewItemClickListener;
 
-    public ServiceReqAdapter(Context ctx, ServiceRequestEntries listReqs) {
+    public ServiceReqAdapter(Context ctx, FBModalEntityList<ServiceRequestModal> listReqs) {
         mtx = ctx;
         mListServiceReqs = listReqs;
     }
@@ -53,7 +48,7 @@ public class ServiceReqAdapter extends RecyclerView.Adapter<ServiceReqViewHolder
         return mListServiceReqs.GetCount();
     }
 
-    public void RegisterItemClickListner(ServiceRequestItemClickListener srItemclickListener) {
-        mServiceRequestItemClickListener = srItemclickListener;
+    public void RegisterItemClickListner(RecyclerViewItemClickListener srItemclickListener) {
+        mRecyclerViewItemClickListener = srItemclickListener;
     }
 }

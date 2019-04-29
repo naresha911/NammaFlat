@@ -21,7 +21,7 @@ public class Constants {
     public final static String GPHOTOS_SCOPE
             = "oauth2:profile email https://www.googleapis.com/auth/drive.photos.readonly";
 
-    public static final String EXTRAS_SERVICE_REQUEST_MODAL = "addedServiceRequest";
+    public static final String EXTRAS_ACTIVITY_RESULT_MODAL = "addedServiceRequest";
 
     /** Firebase collections and documents */
 

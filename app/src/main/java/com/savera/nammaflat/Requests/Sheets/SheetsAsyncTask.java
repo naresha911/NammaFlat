@@ -1,4 +1,4 @@
-package com.savera.nammaflat.Requests;
+package com.savera.nammaflat.Requests.Sheets;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
@@ -10,7 +10,7 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.savera.nammaflat.AuthActivity;
-import com.savera.nammaflat.modal.ServiceRequestEntries;
+import com.savera.nammaflat.modal.FBModalEntityList;
 
 import java.io.IOException;
 
@@ -22,7 +22,7 @@ abstract class SheetsAsyncTask extends AsyncTask<Void, Void, Boolean> {
     protected Exception mLastError = null;
     protected String mSpreadSheetId;
     protected String mRange;
-    protected ServiceRequestEntries mServiceRequests;
+    protected FBModalEntityList mServiceRequests;
 
 
     public SheetsAsyncTask(AuthActivity authActivity, String spreadSheetId, String range) {
@@ -90,7 +90,7 @@ abstract class SheetsAsyncTask extends AsyncTask<Void, Void, Boolean> {
         super.onCancelled();
     }
 
-    public ServiceRequestEntries GetRequests() {
+    public FBModalEntityList GetRequests() {
         if(mServiceRequests.IsEmpty())
             return null;
 

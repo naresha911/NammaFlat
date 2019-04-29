@@ -1,47 +1,19 @@
 package com.savera.nammaflat;
 
-import android.app.Activity;
-import android.app.Dialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatDialogFragment;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.savera.nammaflat.Constants;
-import com.savera.nammaflat.GoogleAuthActivity;
-import com.savera.nammaflat.R;
-import com.savera.nammaflat.Requests.AsyncTaskListener;
 import com.savera.nammaflat.Requests.Firebase.FBQueryAddDataAsyncTask;
-import com.savera.nammaflat.Requests.Firebase.FirebaseAsyncTask;
-import com.savera.nammaflat.Requests.GoogleAsyncTask;
 import com.savera.nammaflat.Utils.SharedPrefrncsUtils;
 import com.savera.nammaflat.modal.ServiceRequestModal;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -123,7 +95,7 @@ public class ServiceRequestForm extends GoogleAuthActivity {
     public void OnFBQueryComplete() {
         if(mAddDataAsyncTask.IsTaskSuccessfull()) {
             Intent retIntent = new Intent();
-            retIntent.putExtra(Constants.EXTRAS_SERVICE_REQUEST_MODAL, mSrModal);
+            retIntent.putExtra(Constants.EXTRAS_ACTIVITY_RESULT_MODAL, mSrModal);
             setResult(RESULT_OK, retIntent);
             finish();
             return;

@@ -1,5 +1,6 @@
 package com.savera.nammaflat.modal;
 
+import com.google.firebase.Timestamp;
 import com.savera.nammaflat.Constants;
 
 import java.util.Date;
@@ -9,7 +10,7 @@ public class EventModal extends FBModal{
     private Long   eventtype;
     private String title;
     private String description;
-    private Date   eventdate;
+    private Timestamp eventdate;
 
     @Override
     public void FillData(Map<String, Object> modalData) {
@@ -27,7 +28,7 @@ public class EventModal extends FBModal{
 
         obj = modalData.get(Constants.EV_DATE);
         if(obj != null)
-            eventdate = (Date) obj;
+            eventdate = (Timestamp) obj;
     }
 
     public Long getEventtype() {
@@ -54,11 +55,11 @@ public class EventModal extends FBModal{
         this.description = description;
     }
 
-    public Date getEventdate() {
+    public Timestamp getEventdate() {
         return eventdate;
     }
 
-    public void setEventdate(Date eventdate) {
+    public void setEventdate(Timestamp eventdate) {
         this.eventdate = eventdate;
     }
 }

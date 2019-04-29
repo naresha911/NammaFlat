@@ -8,10 +8,9 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.savera.nammaflat.Adapters.ServiceReqAdapter;
-import com.savera.nammaflat.Adapters.ServiceRequestItemClickListener;
-import com.savera.nammaflat.Requests.AsyncTaskListener;
+import com.savera.nammaflat.Adapters.RecyclerViewItemClickListener;
 import com.savera.nammaflat.Requests.Firebase.FBQueryGetDataAsyncTask;
-import com.savera.nammaflat.modal.ServiceRequestEntries;
+import com.savera.nammaflat.modal.FBModalEntityList;
 import com.savera.nammaflat.modal.ServiceRequestModal;
 
 import java.util.ArrayList;
@@ -19,10 +18,10 @@ import java.util.ArrayList;
 import static com.savera.nammaflat.Constants.REQUEST_SERVICE_REQUEST_ADD;
 import static java.lang.Boolean.TRUE;
 
-public class ShowServiceRequests extends GoogleAuthActivity implements ServiceRequestItemClickListener {
+public class ShowServiceRequests extends GoogleAuthActivity implements RecyclerViewItemClickListener {
 
     private RecyclerView mRecyclerView;
-    private ServiceRequestEntries mServiceRequestsEntries;
+    private FBModalEntityList<ServiceRequestModal> mServiceRequestsEntries;
     private ServiceReqAdapter mAdapter;
     private FBQueryGetDataAsyncTask mGetDataAsyncTask;
 
@@ -83,7 +82,7 @@ public class ShowServiceRequests extends GoogleAuthActivity implements ServiceRe
             case REQUEST_SERVICE_REQUEST_ADD: {
                 if (resultCode == RESULT_OK && data != null &&
                         data.getExtras() != null) {
-                    ServiceRequestModal requestModal = (ServiceRequestModal) data.getSerializableExtra(Constants.EXTRAS_SERVICE_REQUEST_MODAL);
+                    ServiceRequestModal requestModal = (ServiceRequestModal) data.getSerializableExtra(Constants.EXTRAS_ACTIVITY_RESULT_MODAL);
                     if(requestModal == null){
                         Toast.makeText(this, "Failed to add request", Toast.LENGTH_LONG);
                     }
@@ -104,7 +103,7 @@ public class ShowServiceRequests extends GoogleAuthActivity implements ServiceRe
         if(mServiceRequestsEntries != null)
             mServiceRequestsEntries.Reset();
         else
-            mServiceRequestsEntries = new ServiceRequestEntries();
+            mServiceRequestsEntries = new FBModalEntityList();
 
         ArrayList<Object> resultObjs = mGetDataAsyncTask.getResults(ServiceRequestModal.class.getName());
         if(!resultObjs.isEmpty())

@@ -3,7 +3,6 @@ package com.savera.nammaflat.viewholders;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.savera.nammaflat.Adapters.ServiceReqAdapter;
@@ -30,7 +29,7 @@ public class ServiceReqViewHolder extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mAdapter.mServiceRequestItemClickListener.OnItemClickListener(getAdapterPosition(), v);
+                mAdapter.mRecyclerViewItemClickListener.OnItemClickListener(getAdapterPosition(), v);
             }
         });
     }
