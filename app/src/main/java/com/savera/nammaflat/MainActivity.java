@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v) {
                 Toast.makeText(MainActivity.this,"Display Photos", Toast.LENGTH_LONG).show();
-                startActivity(new Intent(MainActivity.this, ShowServiceRequests.class));
+                startActivity(new Intent(MainActivity.this, GooglePhotosActivity.class));
             }
         });
 

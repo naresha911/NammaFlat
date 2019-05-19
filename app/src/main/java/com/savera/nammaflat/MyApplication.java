@@ -6,6 +6,7 @@ public class MyApplication extends Application {
 
     private static MyApplication mInstance;
     public static String mGoogleAccountName;
+    public static String googleAuthToken;
 
     public MyApplication() {
         mGoogleAccountName = null;

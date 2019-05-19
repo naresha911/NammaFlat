@@ -19,10 +19,12 @@ import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.google.android.gms.common.AccountPicker;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.common.collect.ImmutableList;
 import com.savera.nammaflat.Requests.AsyncTaskListener;
 import com.savera.nammaflat.Utils.SharedPrefrncsUtils;
 
 import java.io.IOException;
+import java.util.List;
 
 abstract public class GoogleAuthActivity extends AppCompatActivity implements AsyncTaskListener {
 
@@ -32,8 +34,14 @@ abstract public class GoogleAuthActivity extends AppCompatActivity implements As
         RETURN_Fail
     }
 
+    private static final List<String> REQUIRED_SCOPES =
+            ImmutableList.of(
+                    "https://www.googleapis.com/auth/photoslibrary.readonly",
+                    "https://www.googleapis.com/auth/photoslibrary.appendonly");
+
     public String TAG = "GoogleAuthActivity";
     protected boolean mSkipUserRegisterValidation;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +116,8 @@ abstract public class GoogleAuthActivity extends AppCompatActivity implements As
         if(SharedPrefrncsUtils.getDefaults(Constants.PREF_ACCOUNT_NAME, this) != MyApplication.mGoogleAccountName) {
             SharedPrefrncsUtils.setDefaults(Constants.PREF_ACCOUNT_NAME, MyApplication.mGoogleAccountName, this);
         }
+
+        fetchAuthToken();
 
         if (isDeviceOnline(getApplicationContext())) {
             this.ExecuteQuery();
@@ -184,6 +194,34 @@ abstract public class GoogleAuthActivity extends AppCompatActivity implements As
             return false;
 
         return true;
+    }
+
+    private void fetchAuthToken() {
+        if (MyApplication.googleAuthToken == null) {
+
+            new AsyncTask(){
+
+                @Override
+                protected Object doInBackground(Object[] objects) {
+                    try {
+                        Log.d(TAG,"Requesting token for account: " +
+                                MyApplication.mGoogleAccountName);
+                        MyApplication.googleAuthToken = GoogleAuthUtil.getToken(getApplicationContext(),
+                                MyApplication.mGoogleAccountName, Constants.GPHOTOS_SCOPE);
+
+                        Log.d(TAG, "Received Token: " + MyApplication.googleAuthToken);
+                    } catch (IOException e) {
+                        Log.e(TAG, e.getMessage());
+                    } catch (UserRecoverableAuthException e) {
+                        startActivityForResult(e.getIntent(), Constants.REQ_SIGN_IN_REQUIRED);
+                    } catch (GoogleAuthException e) {
+                        Log.e(TAG, e.getMessage());
+                    }
+                    return null;
+                }
+            }.execute();
+
+        }
     }
 
 }

@@ -19,7 +19,7 @@ public class Constants {
 
     /** 'Scopes' required to request Google permissions for our specific case */
     public final static String GPHOTOS_SCOPE
-            = "oauth2:profile email https://www.googleapis.com/auth/drive.photos.readonly";
+            = "oauth2:profile email https://www.googleapis.com/auth/photoslibrary.readonly";
 
     public static final String EXTRAS_ACTIVITY_RESULT_MODAL = "addedServiceRequest";
 
@@ -48,4 +48,19 @@ public class Constants {
     public static final String EV_TITLE = "title";
     public static final String EV_DESCRIPTION = "description";
     public static final String EV_DATE = "eventdate";
+
+    /** Header information required for added authorization to API calls */
+    public static final String PHOTOS_URL = "https://photoslibrary.googleapis.com/v1/albums";
+    public static final String HEADER_NAME_AUTH = "Authorization";
+    public static final String HEADER_AUTH_VAL_PRFX = "Bearer ";
+
+    //ALBUM
+    public static final String ALBUMS = "albums";
+    public static final String PHOTOS_ALBUMS_ID = "id";
+    public static final String PHOTOS_ALBUMS_TITLE = "title";
+    public static final String PHOTOS_ALBUMS_PRODUCTURL = "productUrl";
+    public static final String PHOTOS_ALBUMS_MEDIAITEMSCOUNT = "mediaItemsCount";
+    public static final String PHOTOS_ALBUMS_COVERPHOTOBASEURL = "coverPhotoBaseUrl";
+    public static final String PHOTOS_ALBUMS_COVERPHOTOMEDIAITEMID = "coverPhotoMediaItemId";
+    public static final String PHOTOS_ALBUMS_NEXT_PAGE_TOKEN = "nextPageToken";
 }
