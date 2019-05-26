@@ -1,13 +1,11 @@
 package com.savera.nammaflat.Requests.photos;
 
-import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.savera.nammaflat.Constants;
 import com.savera.nammaflat.GoogleAuthActivity;
-import com.savera.nammaflat.modal.Album;
+import com.savera.nammaflat.modal.photos.Album;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,6 +22,10 @@ public class PhotoAsyncListAlbums extends PhotoAsyncTask {
 
     public PhotoAsyncListAlbums(GoogleAuthActivity authActivity) {
         super(authActivity);
+    }
+
+    public ArrayList<Album> GetAlbums() {
+        return mAlbums;
     }
 
     @Override
@@ -49,9 +51,9 @@ public class PhotoAsyncListAlbums extends PhotoAsyncTask {
 
                 //Result will have images and videos. Skip if a video is encountered
                 Album al = new Album();
-                al.id = jObj.getString(Constants.PHOTOS_ALBUMS_ID);
-                al.title = jObj.getString(Constants.PHOTOS_ALBUMS_TITLE);
-                al.productUrl = jObj.getString(Constants.PHOTOS_ALBUMS_PRODUCTURL);
+                al.id = jObj.getString(Constants.PHOTOS_ID);
+                al.title = jObj.getString(Constants.PHOTOS_TITLE);
+                al.productUrl = jObj.getString(Constants.PHOTOS_PRODUCTURL);
                 al.mediaItemsCount = Long.valueOf(jObj.getString(Constants.PHOTOS_ALBUMS_MEDIAITEMSCOUNT));
                 al.coverPhotoBaseUrl = jObj.getString(Constants.PHOTOS_ALBUMS_COVERPHOTOBASEURL);
                 al.coverPhotoMediaItemId = jObj.getString(Constants.PHOTOS_ALBUMS_COVERPHOTOMEDIAITEMID);

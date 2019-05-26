@@ -1,4 +1,4 @@
-package com.savera.nammaflat.modal;
+package com.savera.nammaflat.modal.photos;
 
 import java.io.Serializable;
 

@@ -16,8 +16,16 @@ import java.util.Map;
 import static com.savera.nammaflat.MyApplication.googleAuthToken;
 
 public class VolleyPhotoRequest extends JsonObjectRequest {
+    Map<String, String> m_mapHeaderParams;
+
     public VolleyPhotoRequest(int method, String url, @Nullable JSONObject jsonRequest, Response.Listener<JSONObject> listener, @Nullable Response.ErrorListener errorListener) {
         super(method, url, jsonRequest, listener, errorListener);
+
+        m_mapHeaderParams = new HashMap<String, String>();
+    }
+
+    public void AppendAdditionalHeaders(Map<String, String> mapHeaderParams) {
+        m_mapHeaderParams = mapHeaderParams;
     }
 
     //This is for Headers If You Needed
@@ -28,6 +36,11 @@ public class VolleyPhotoRequest extends JsonObjectRequest {
         params.put("access_token", "255720913047-qpc4k66grnvtph5bjnmhhua42utbkqf4.apps.googleusercontent.com");
         // params.put("key=", googleAuthToken);
         params.put("Authorization", Constants.HEADER_AUTH_VAL_PRFX + googleAuthToken);
+
+        for (Map.Entry<String,String> entry : m_mapHeaderParams.entrySet()) {
+            params.put(entry.getKey(), entry.getValue());
+        }
+
         return params;
     }
 }

@@ -63,8 +63,16 @@ public class VolleyRequestQueue {
     public ImageLoader getImageLoader() {
         return mImageLoader;
     }
+
     public <T> void addToRequestQueue(Request<T> req) {
+        req.setTag(mAuthActivity.get().TAG);
         getRequestQueue().add(req);
+    }
+
+    public void cancelPendingRequests(Object tag) {
+        if (mRequestQueue != null) {
+            mRequestQueue.cancelAll(tag);
+        }
     }
 
 }

@@ -51,16 +51,29 @@ public class Constants {
 
     /** Header information required for added authorization to API calls */
     public static final String PHOTOS_URL = "https://photoslibrary.googleapis.com/v1/albums";
+    public static final String PHOTOS_MEDIA_ITEMS_SEARCH_URL = "https://photoslibrary.googleapis.com/v1/mediaItems:search";
     public static final String HEADER_NAME_AUTH = "Authorization";
     public static final String HEADER_AUTH_VAL_PRFX = "Bearer ";
 
+    public static final String PHOTOS_ID = "id";
+    public static final String PHOTOS_TITLE = "title";
+    public static final String PHOTOS_PRODUCTURL = "productUrl";
+
     //ALBUM
     public static final String ALBUMS = "albums";
-    public static final String PHOTOS_ALBUMS_ID = "id";
-    public static final String PHOTOS_ALBUMS_TITLE = "title";
-    public static final String PHOTOS_ALBUMS_PRODUCTURL = "productUrl";
     public static final String PHOTOS_ALBUMS_MEDIAITEMSCOUNT = "mediaItemsCount";
     public static final String PHOTOS_ALBUMS_COVERPHOTOBASEURL = "coverPhotoBaseUrl";
     public static final String PHOTOS_ALBUMS_COVERPHOTOMEDIAITEMID = "coverPhotoMediaItemId";
     public static final String PHOTOS_ALBUMS_NEXT_PAGE_TOKEN = "nextPageToken";
+
+    //MEDIA Item
+    public static final String MEDIA_ITEMS = "mediaItems";
+    public static final String PHOTOS_MEDIA_BASEURL = "baseUrl";
+    public static final String PHOTOS_MEDIA_MIMETYPE = "mimeType";
+    public static final String PHOTOS_MEDIA_METADATA = "mediaMetadata";
+    public static final String PHOTOS_MEDIA_FILENAME = "filename";
+
+    //MEDIA META DATA
+    public static final String MEDIA_ITEMS = "mediaItems";
+
 }

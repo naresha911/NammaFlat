@@ -15,7 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".GooglePhotosActivity"></activity>
+        <activity android:name=".GalleryActivity"></activity>
+        <activity android:name=".GooglePhotosActivity" />
         <activity android:name=".ShowEventsActivity" />
         <activity android:name=".RegisterUserActivity" />
         <activity android:name=".GoogleAuthActivity" />

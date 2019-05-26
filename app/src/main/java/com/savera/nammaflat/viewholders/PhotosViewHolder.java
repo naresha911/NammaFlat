@@ -14,6 +14,7 @@ public class PhotosViewHolder extends RecyclerView.ViewHolder {
     public NetworkImageView mNetworkImageView;
     public TextView         mAlbumTitle;
     public CardView        mCardView;
+    public PhotoAlbumsAdapter mAlbumsAdapter;
 
     public PhotosViewHolder(PhotoAlbumsAdapter albumsAdapter, @NonNull View itemView) {
         super(itemView);
@@ -21,5 +22,13 @@ public class PhotosViewHolder extends RecyclerView.ViewHolder {
         mNetworkImageView = itemView.findViewById(R.id.ph_networkImageView);
         mAlbumTitle = itemView.findViewById(R.id.ph_album_title);
         //mCardView = itemView.findViewById(R.id.ph_album_cardview);
+        mAlbumsAdapter = albumsAdapter;
+
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAlbumsAdapter.mRecyclerViewItemClickListener.OnItemClickListener(getAdapterPosition(), v);
+            }
+        });
     }
 }
