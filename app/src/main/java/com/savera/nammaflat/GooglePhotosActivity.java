@@ -67,7 +67,7 @@ public class GooglePhotosActivity extends GoogleAuthActivity implements Recycler
             return false;
 
         Intent launchSRFormActivity = new Intent(this, GalleryActivity.class);
-        launchSRFormActivity.putExtra("model_data", resultAlbums.get(position));
+        launchSRFormActivity.putExtra("selected_album", resultAlbums.get(position));
         startActivity(launchSRFormActivity);
         return true;
     }

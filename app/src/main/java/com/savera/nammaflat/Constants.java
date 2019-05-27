@@ -57,6 +57,7 @@ public class Constants {
 
     public static final String PHOTOS_ID = "id";
     public static final String PHOTOS_TITLE = "title";
+    public static final String PHOTOS_DESCRIPTION = "description";
     public static final String PHOTOS_PRODUCTURL = "productUrl";
 
     //ALBUM
@@ -74,6 +75,8 @@ public class Constants {
     public static final String PHOTOS_MEDIA_FILENAME = "filename";
 
     //MEDIA META DATA
-    public static final String MEDIA_ITEMS = "mediaItems";
+    public static final String MEDIA_ITEM_CREATIONTIME = "mediaItems";
+    public static final String MEDIA_ITEM_WIDTH = "width";
+    public static final String MEDIA_ITEM_HEIGHT = "height";
 
 }
